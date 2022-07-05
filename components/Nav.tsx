@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-
+import { ConnectButton } from 'web3uikit'
 const Nav = () => {
   return (
 	<nav>
@@ -15,7 +15,7 @@ const Nav = () => {
 				<Link href='/proposals'>Proposals</Link>
 			</li>
 			<li className='my-1 mx-2'>
-				<Link href='/account'>Account</Link>
+				<ConnectButton />
 			</li>
 		</ul>
 	</nav>
