@@ -18,7 +18,7 @@ const Home: NextPage = () => {
         <Paragraph header="Hello World" text={paragraphText}/>
       </body>
       <footer>
-        Hello World
+        Hello World Hello World
       </footer>
     </>
   )
