@@ -1,5 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
+import Connect from './Connect'
 
 const Nav = () => {
   return (
@@ -15,7 +16,7 @@ const Nav = () => {
 				<Link href='/proposals'>Proposals</Link>
 			</li>
 			<li className='my-1 mx-2'>
-				Connect
+				<Connect/>
 			</li>
 		</ul>
 	</nav>
