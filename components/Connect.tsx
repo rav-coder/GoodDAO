@@ -2,14 +2,14 @@ import React, { useState } from 'react'
 import Web3 from 'web3'
 
 const Connect = () => {
-
-	const [connected, setConnect] = useState(false)
 	var account;
+	const [btnText, setTxt] = useState(account || "Connect")
+	
 	const handleClick = async () => {
 		if (typeof window !== 'undefined' && typeof window.ethereum !== 'undefined') {
 			const accounts = await window.ethereum.request({ method: "eth_requestAccounts" })
 			account = accounts[0]
-			setConnect(true)
+			setTxt(account)
 		} else {
 			console.log('No Metamask')
 		}
@@ -18,7 +18,7 @@ const Connect = () => {
 	return (
 	<>
 		
-		<button onClick={handleClick}><span>{account !== undefined ? <span>{account}</span> : <span>Connect</span>}</span></button>
+		<button onClick={handleClick}>{btnText}</button>
 	</>
 	
   )
