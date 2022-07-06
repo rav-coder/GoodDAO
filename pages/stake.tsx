@@ -1,20 +1,34 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import InfoBox from '../components/InfoBox'
+import { getBurned } from '../utils/getBurned'
 
-const stake = () => {
+const Stake = () => {
+
+	const [burned, setBurned] = useState('')
+
+	useEffect(() => {
+		const callData = async () => {
+			const data = await getBurned()
+			setBurned(data)
+		}
+
+		callData()
+	}, [])
+
+
   return (
 	<>
-		<div className='flex'>
+		<div className='flex items-center h-screen space-x-10 p-10'>
 			<div className='flex-1'>
-				<InfoBox title="Price" text="asd"/>
-				<InfoBox title="Token Threshold" text="asd"/>
+				<InfoBox title="Price" text={burned}/>
+				<InfoBox title="Token Threshold" text="123"/>
 			</div>
 			<div className='flex-1'>
 				LOL
 			</div>
 			<div className='flex-1'>
-				<InfoBox title="APR" text="asd"/>
-				<InfoBox title="Total Staked" text="asd"/>
+				<InfoBox title="APR" text="456"/>
+				<InfoBox title="Total Staked" text="789"/>
 			</div>
 		</div>
 	</>
@@ -22,4 +36,4 @@ const stake = () => {
   )
 }
 
-export default stake
+export default Stake
