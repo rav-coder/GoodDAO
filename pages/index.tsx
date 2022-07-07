@@ -1,6 +1,5 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
 import styles from "../styles/Home.module.css"
 import Paragraph from '../components/Paragraph'
 
@@ -12,11 +11,11 @@ const Home: NextPage = () => {
       <Head>
         <title>GoodDAO</title>
       </Head>
-      <body className={styles.body}>
+      <div>
         <Paragraph header="Hello World" text={paragraphText}/>
         <Paragraph header="Hello World" text={"deez " + paragraphText}/>
         <Paragraph header="Hello World" text={paragraphText}/>
-      </body>
+      </div>
       <footer>
         Hello World Hello World
       </footer>
