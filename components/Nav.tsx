@@ -13,6 +13,9 @@ const Nav = () => {
 				<Link href='/stake'>Stake</Link>
 			</li>
 			<li className='my-1 mx-2'>
+				<Link href='/scrap'>Scrap</Link>
+			</li>
+			<li className='my-1 mx-2'>
 				<Link href='/proposals'>Proposals</Link>
 			</li>
 			<li className='my-1 mx-2'>

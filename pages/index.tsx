@@ -8,6 +8,9 @@ const Home: NextPage = () => {
     <Head>
       <title>GoodDAO</title>
     </Head>
+    
+    
+    
     <main>
       <h1>Hello World, testing edit 1</h1>
     </main>
