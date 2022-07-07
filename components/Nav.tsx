@@ -1,15 +1,14 @@
 import React from 'react'
 import Connect from './Connect'
-import styles from '../styles/Nav.module.css'
 import NavButton from './NavButton'
 
 const Nav = () => {
 	return (
 		<>
 
-			<nav className={styles.nav}>
+			<nav className='h-24 w-screen p-3 bg-gradient-to-br from-sky-600 to-violet-900 text-white font-bold flex items-center justify-center fixed'>
 
-				<ul className={styles.ul}>
+				<ul>
 					<NavButton link={'/'} text={'Home'}/>
 					<NavButton link={'/stake'} text={'Stake'}/>
 					<NavButton link={'/proposals'} text={'Proposals'}/>
@@ -17,8 +16,7 @@ const Nav = () => {
 					<Connect/>
 				</ul>
 			</nav>
-			<div className={styles.logo}></div>
-
+			<div className="hover:cursor-pointer fixed h-24 w-24 bg-[url('../public/logo.jpg')] bg-contain bg-no-repeat"></div>
 
 		</>
 	)

@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import styles from '../styles/Nav.module.css'
 
 const Connect = () => {
 
@@ -16,7 +15,7 @@ const Connect = () => {
 
 	return (
 	<>
-		<button onClick={handleClick} className={styles.btn}><span className={styles.a}>{btnText}</span></button>
+		<button onClick={handleClick} className='bg-purple py-1.5 px-5 rounded-2xl my-1 mx-4 hover:bg-[#e0e0e0]'>{btnText}</button>
 	</>
 	
   )

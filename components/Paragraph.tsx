@@ -1,6 +1,11 @@
 import styles from '../styles/Home.module.css'
 
-export default function Paragraph({ header, text }) {
+type Props = {
+    header: string,
+    text: string
+}
+
+export default function Paragraph({ header, text }:Props) {
     return (
         <div className={styles.main}>
             <div className={styles.box}>
