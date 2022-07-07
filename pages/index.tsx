@@ -9,7 +9,7 @@ const Home: NextPage = () => {
       <title>GoodDAO</title>
     </Head>
     <main>
-      <h1>Hello World</h1>
+      <h1>Hello World, testing edit 1</h1>
     </main>
     </>
   )
