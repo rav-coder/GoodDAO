@@ -7,7 +7,7 @@ type Props = {
 
 const InfoBox = ({title, text}: Props) => {
   return (
-	<div className="bg-blue-400">
+	<div className="bg-gray text-center text-black p-10 m-10 rounded-xl">
 		<h1>{title}</h1>
 		<h2>{text}</h2>
 	</div>
