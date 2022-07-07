@@ -1,8 +1,14 @@
-import React from 'react'
+import React, { JSXElementConstructor } from 'react'
 import Link from 'next/link'
 import styles from '../styles/Nav.module.css'
 
-export default function Button({ link, text }) {
+type Props = {
+    link:string,
+    text:string
+}
+
+
+export default function NavButton({ link, text }: Props) {
     return (
         <button className={styles.btn}>
             <li className={styles.a}>

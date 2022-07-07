@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import InfoBox from '../components/InfoBox'
+import StakeBox from '../components/StakeBox'
 import { getBurned } from '../utils/getBurned'
 
 const Stake = () => {
@@ -24,7 +25,7 @@ const Stake = () => {
 				<InfoBox title="Token Threshold" text="123"/>
 			</div>
 			<div className='flex-1'>
-				LOL
+				<StakeBox/>
 			</div>
 			<div className='flex-1'>
 				<InfoBox title="APR" text="456"/>

@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import styles from '../styles/Nav.module.css'
+
 const Connect = () => {
 
 	let account;
@@ -14,7 +16,7 @@ const Connect = () => {
 
 	return (
 	<>
-		<button onClick={handleClick}>{btnText}</button>
+		<button onClick={handleClick} className={styles.btn}><span className={styles.a}>{btnText}</span></button>
 	</>
 	
   )
