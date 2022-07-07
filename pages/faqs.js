@@ -8,6 +8,7 @@ export default function Faqs() {
     return (
         <div className={styles.body}>
             <Paragraph header="FAQ 1" text={paragraphText} />
+            <Paragraph header="FAQ 2" text={paragraphText} />
         </div>
     )
 }
