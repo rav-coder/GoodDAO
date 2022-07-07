@@ -18,21 +18,19 @@ const Stake = () => {
 
 
   return (
-	<>
-		<div className='flex items-center h-screen space-x-10 p-10'>
-			<div className='flex-1'>
-				<InfoBox title="Price" text={burned}/>
-				<InfoBox title="Token Threshold" text="123"/>
-			</div>
-			<div className='flex-1'>
-				<StakeBox/>
-			</div>
-			<div className='flex-1'>
-				<InfoBox title="APR" text="456"/>
-				<InfoBox title="Total Staked" text="789"/>
-			</div>
+	<div className='flex h-full space-x-10 p-10 items-center'>
+		<div className='flex flex-1 flex-col h-full pt-[200px] pb-60 justify-between px-20'>
+			<InfoBox title="Price" text={burned}/>
+			<InfoBox title="Token Threshold" text="123"/>
 		</div>
-	</>
+		<div className=' flex-1 '>
+			<StakeBox/>
+		</div>
+		<div className='flex flex-1 flex-col h-full pt-[200px] pb-60 justify-between px-20'>
+			<InfoBox title="APR" text="456"/>
+			<InfoBox title="Total Staked" text="789"/>
+		</div>
+	</div>
 	
   )
 }
