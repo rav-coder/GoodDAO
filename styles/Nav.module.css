@@ -1,0 +1,39 @@
+.nav {
+    height: 100px;
+    width: 100vw;
+    padding: 10px;
+    background: #000000;
+    color: #8B5CF6;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    position: fixed;
+}
+
+.ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    margin-left: 50vw;
+    transform: translateX(-50%);
+}
+
+.a {
+    margin: 5px 15px;
+}
+
+.logo {
+    position: fixed;
+    color: #fff;
+    height: 100px;
+    width: 100px;
+    background-image: url('../public/logo.jpg');
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.logo:hover {
+    cursor: pointer;
+}
