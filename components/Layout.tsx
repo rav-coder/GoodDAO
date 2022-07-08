@@ -2,6 +2,7 @@ import Image from 'next/image'
 import React, { ReactNode } from 'react'
 import Nav from './Nav'
 import background from '../public/bg-hero.png'
+import Footer from './Footer'
 
 type Props = {
 	children?: ReactNode
@@ -14,9 +15,10 @@ const Layout = ({ children }: Props) => (
 			<Image src={background} alt='background' layout='fill' quality={100} />	
 		</div>
 		<Nav />
-		<main className='h-full'>
+		<main className='h-screen'>
 			{children}
 		</main>
+		<Footer/>
 		
 	</div>
 	</>
