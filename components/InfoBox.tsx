@@ -7,9 +7,9 @@ type Props = {
 
 const InfoBox = ({title, text}: Props) => {
   return (
-	<div className="bg-blue-400">
-		<h1>{title}</h1>
-		<h2>{text}</h2>
+	<div className="bg-gray text-center text-black font-bold py-6 m-10 rounded-xl flex flex-col justify-between text-lg">
+		<span className='pb-2'>{title}</span>
+		<span className='pt-2'>{text}</span>
 	</div>
   )
 }

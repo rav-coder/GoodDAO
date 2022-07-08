@@ -8,3 +8,8 @@ body {
   font-family: 'BCharity', Helvetica, Arial, sans-serif;
   @apply bg-gray-50;
 }
+
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}

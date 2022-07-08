@@ -1,27 +1,23 @@
 import React, { useState } from 'react'
-import Web3 from 'web3'
 
 const Connect = () => {
-	var account;
-	const [btnText, setTxt] = useState(account || "Connect")
+
+	let account;
 	
+	const [btnText, setTxt] = useState(account || "Connect")
+	 
 	const handleClick = async () => {
-		if (typeof window !== 'undefined' && typeof window.ethereum !== 'undefined') {
-			const accounts = await window.ethereum.request({ method: "eth_requestAccounts" })
-			account = accounts[0]
-			setTxt(account)
-		} else {
-			console.log('No Metamask')
-		}
+		const {ethereum} = window
+		const accounts = await ethereum.request({method: "eth_requestAccounts"})
+		account = accounts[0]
+		setTxt(account)
 	}
 
 	return (
 	<>
-		
-		<button onClick={handleClick}>{btnText}</button>
+		<button onClick={handleClick} className='bg-purple py-1.5 px-5 rounded-2xl my-1 mx-4 hover:bg-[#e0e0e0]'>{btnText}</button>
 	</>
 	
   )
 }
-
 export default Connect
