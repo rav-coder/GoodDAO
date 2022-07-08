@@ -4,6 +4,7 @@ import {useRouter} from 'next/router';
 
 import Connect from './Connect'
 import Logo from '../public/logo.jpg'
+import Image from 'next/image';
 
 const Nav = () => {
   const router = useRouter();
@@ -21,11 +22,11 @@ const Nav = () => {
 						<li className='my-1 mx-2'>
 							<Link href="/">
 								<div className="inline-flex flex-grow justify-between items-center font-bold text-blue-900">
-									<a href="/">
+									<Link href="/">
 										<div className="text-3xl font-black">
-											<img className="w-8 h-8" src={Logo.src} alt="Logo"/>
+											<Image layout='intrinsic' width='32' height='32' src={Logo} alt="Logo"/>	
 										</div>
-									</a>
+									</Link>
 									<span className="flex fle-grow ml-3 mr-3">GoodDAO</span>
 								</div>
 							</Link>
@@ -41,6 +42,9 @@ const Nav = () => {
 							</li>
 							<li className='my-1 mx-2'>
 								<Link href='/proposals'>Proposals</Link>
+							</li>
+							<li className='my-1 mx-2'>
+								<Link href='/faqs'>FAQs</Link>
 							</li>
 						</div>
 
