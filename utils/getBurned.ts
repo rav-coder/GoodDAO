@@ -1,4 +1,3 @@
-import { ethers } from "ethers";
 import { getBalanceOf } from "./getBalanceOf";
 
 const wallet1 = '0x000000000000000000000000000000000000dead'
