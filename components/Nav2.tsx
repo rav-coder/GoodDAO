@@ -3,7 +3,7 @@ import Link from 'next/link'
 import {useRouter} from 'next/router';
 
 import Connect from './Connect'
-import Logo from '../lib/logo.png'
+import Logo from '../public/logo.jpg'
 
 const Nav = () => {
   const router = useRouter();
