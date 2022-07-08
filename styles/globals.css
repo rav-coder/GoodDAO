@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import url('fonts.css');
+
+body {
+  font-family: 'BCharity', Helvetica, Arial, sans-serif;
+  @apply bg-gray-50;
+}
