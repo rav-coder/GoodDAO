@@ -1,0 +1,21 @@
+.main {
+    margin-top: 10vh;
+}
+
+.proposals {
+    margin-top: 10vh;
+    margin-left: 50vw;
+    transform: translateX(-50%);
+    width: 10vw;
+    height: 10vh;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 15px;
+    border-width: 3px;
+    border-color: #8b5cf6;
+}
+
+.proposals:hover {
+    background-color: #eee;
+    cursor: pointer;
+}
