@@ -4,6 +4,9 @@ import { useAccount, useConnect, useDisconnect } from 'wagmi'
 const Connect = () => {
 
 	const [btnTxt, setBtnTxt] = useState(<div></div>)
+
+	const { connect, connectors, error, isLoading, pendingConnector } = useConnect()
+
 	useEffect(() => {
 
 		
@@ -23,10 +26,8 @@ const Connect = () => {
 			)
 		}
 		callData()
-	})
+	}, [connect, connectors, error, isLoading, pendingConnector])
 	 
-
-	const { connect, connectors, error, isLoading, pendingConnector } = useConnect()
 	const { address, connector, isConnected } = useAccount()
 	const { disconnect } = useDisconnect()
 	const disconnectClick = () => {disconnect()}
