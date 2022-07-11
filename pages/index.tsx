@@ -13,12 +13,10 @@ const Home: NextPage = () => {
       </Head>
       <div>
         <Paragraph header="Hello World" text={paragraphText}/>
-        <Paragraph header="Hello World" text={"deez " + paragraphText}/>
-        <Paragraph header="Hello World" text={paragraphText}/>
       </div>
-      <footer>
+      {/* <footer>
         Hello World Hello World
-      </footer>
+      </footer> */}
     </>
   )
 }

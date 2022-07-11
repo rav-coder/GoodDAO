@@ -6,19 +6,11 @@ module.exports = {
   ],
   theme: {
     extend: {
-<<<<<<< HEAD
-      colors: {
-        green: "#10b981",
-        purple: "#8b5cf6",
-        gray: "#e4e4e7",
-      },
-=======
         colors: {
           'green': '#10b981',
           'purple': '#8b5cf6',
           'gray': '#e4e4e7'
         },
->>>>>>> upstream/main
     },
   },
   plugins: [],
