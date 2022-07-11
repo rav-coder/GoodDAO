@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
-const Connect = () => {
 
+const Connect = () => {
 	let account;
 	
 	const [btnText, setTxt] = useState(account || "Connect")

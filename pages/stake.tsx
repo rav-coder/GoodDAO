@@ -20,7 +20,6 @@ const Stake = () => {
 			setThreshold(await getThreshold())
 			setApr(await getApr())
 		}
-
 		callData()
 	}, [])
 
