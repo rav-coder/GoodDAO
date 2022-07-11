@@ -13,13 +13,19 @@ const Home: NextPage = () => {
         <title>GoodDAO</title>
       </Head>
       <div>
-        <div className="grid gap-4 grid-cols-2 grid-rows-3 auto-cols-auto pt-48 h-screen justify-items-center">
-          <HomepageItem text={"CULT Price"} price={0.00001382}/>
-          <HomepageItem text={"Treasury Balance"} price={765.822}/>
-          <HomepageItem text={"Marketcap"} price={58530563}/>
-          <HomepageItem text={"Total Funds Sent"} price={845}/>
-          <HomepageItem text={"Total Value Locked"} price={36711503.212}/>
-          <HomepageItem text={"CULT Burned"} price={1743786178461}/>
+        <div className="flex h-screen space-x-10 p-10 items-center">
+          <div className='flex flex-1 flex-col h-screen pt-[200px] pb-60 justify-between px-20'>
+            <HomepageItem text={"CULT Price"} price={0.00001382}/>
+            <HomepageItem text={"Treasury Balance"} price={765.822}/>
+            <HomepageItem text={"Marketcap"} price={58530563}/>
+          </div>
+          <div className='flex flex-1 flex-col h-screen pt-[200px] pb-60 justify-between px-20'>
+            <HomepageItem text={"Total Funds Sent"} price={845}/>
+            <HomepageItem text={"Total Value Locked"} price={36711503.212}/>
+            <HomepageItem text={"CULT Burned"} price={1743786178461}/>
+          </div>
+          
+
         </div>
 
       </div>
