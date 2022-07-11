@@ -9,12 +9,8 @@ import Image from 'next/image';
 const Nav = () => {
   const router = useRouter();
 
-  if(router.pathname == "/"){
-
-  } 
-
   return (
-	<nav className="sticky top-0 z-10 w-full bg-white border-b">	
+	<nav className="fixed top-0 z-10 w-full bg-white border-b">	
 	    <div className="container px-5 mx-auto max-w-screen-xl">
             <div className="flex relative justify-between items-center h-14 sm:h-16">
 				<div className="sm:block sm:ml-6 flex items-center space-x-4">
@@ -34,17 +30,16 @@ const Nav = () => {
 
 						<div className="flex gap-8 items-center md:ml-36 ml-10 ">
 							<li className='my-1 mx-2'>
-								<div className='w-full text-left px-2 md:px-3 py-1 rounded-md font-black cursor-pointer text-sm tracking-wide text-black bg-gray-200'>
-									<Link href='/'>Home</Link></div>
+								<Link href='/'>{router.pathname == '/' ? <div className='w-full text-left px-2 md:px-3 py-1 rounded-md font-black cursor-pointer text-sm tracking-wide text-black bg-gray'>Home</div> : 'Home'}</Link>
 							</li>
 							<li className='my-1 mx-2'>
-								<Link href='/stake'>Stake</Link>
+								<Link href='/stake'>{router.pathname == '/stake' ? <div className='w-full text-left px-2 md:px-3 py-1 rounded-md font-black cursor-pointer text-sm tracking-wide text-black bg-gray'>Stake</div> : 'Stake'}</Link>
 							</li>
 							<li className='my-1 mx-2'>
-								<Link href='/proposals'>Proposals</Link>
+								<Link href='/proposals'>{router.pathname == '/proposals' ? <div className='w-full text-left px-2 md:px-3 py-1 rounded-md font-black cursor-pointer text-sm tracking-wide text-black bg-gray'>Proposals</div> : 'Proposals'}</Link>
 							</li>
 							<li className='my-1 mx-2'>
-								<Link href='/faqs'>FAQs</Link>
+								<Link href='/faqs'>{router.pathname == '/faqs' ? <div className='w-full text-left px-2 md:px-3 py-1 rounded-md font-black cursor-pointer text-sm tracking-wide text-black bg-gray'>FAQs</div> : 'FAQs'}</Link>
 							</li>
 						</div>
 
