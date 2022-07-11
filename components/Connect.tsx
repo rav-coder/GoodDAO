@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 
+
 const Connect = () => {
 	let account;
 	
@@ -14,7 +15,7 @@ const Connect = () => {
 
 	return (
 	<>
-		<button onClick={handleClick}>{btnText}</button>
+		<button onClick={handleClick} className='bg-purple py-1.5 px-5 rounded-2xl my-1 mx-4 text-white hover:bg-[#e0e0e0] hover:text-black'>{btnText}</button>
 	</>
 	
   )
