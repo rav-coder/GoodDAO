@@ -13,6 +13,8 @@ const Home: NextPage = () => {
     
     <main>
       <h1>Hello World, testing edit 1</h1>
+      <h1>Testing edit 2</h1>
+
     </main>
     </>
   )
