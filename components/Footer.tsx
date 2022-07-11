@@ -1,28 +1,33 @@
-import Image from 'next/image'
-import React from 'react'
-import twitter from '../public/twitter.png'
-import instagram from '../public/Instagram.png'
-import discord from '../public/Discord.png'
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCode, faHighlighter, faBook } from '@fortawesome/free-solid-svg-icons';
+import { faTwitter, faDiscord, faTelegram, faMedium, } from '@fortawesome/free-brands-svg-icons'
+
 
 const Footer = () => {
   return (
-	<>
+	<div className="flex justify-between mx-auto pb-5 w-1/6 border-red-500 border-0">
+            <div className='flex justify-center align-middle items-center self-center bg-white w-10 h-10 rounded-full'>
+                <FontAwesomeIcon icon={faTwitter} />
+            </div>
 
-			<footer className='w-screen h-12 fixed bottom-0 bg-white flex flex-1 justify-center'>
+            <div className='flex justify-center align-middle items-center self-center bg-white w-10 h-10 rounded-full'>
+                <FontAwesomeIcon icon={faDiscord} />
+            </div>
 
-				<div className='flex justify-evenly w-40 bg-green'>
-					<a href='https://twitter.com/BCharityFi' rel='noreferrer' target='_blank'>
-						<Image src={twitter} alt='Twitter' width={39} height={39} layout='intrinsic'/>
-					</a>
-					<a href='https://www.instagram.com/bcharityofficial/' rel='noreferrer' target='_blank'>
-						<Image src={instagram} alt='Twitter' width={39} height={39} layout='intrinsic'/>
-					</a>
-					<a href='https://discord.com/invite/4vKS59q5kV' rel='noreferrer' target='_blank'>
-						<Image src={discord} alt='Twitter' width={39} height={39} layout='intrinsic'/>
-					</a>
-				</div>
-			</footer>
-		</>
+            <div className='flex justify-center align-middle items-center self-center bg-white w-10 h-10 rounded-full'>
+                <FontAwesomeIcon icon={faTelegram} />
+            </div>
+
+            <div className='flex justify-center align-middle items-center self-center bg-white w-10 h-10 rounded-full'>
+                <FontAwesomeIcon icon={faBook} />
+            </div>
+
+            <div className='flex justify-center align-middle items-center self-center bg-white w-10 h-10 rounded-full'>
+                <FontAwesomeIcon icon={faMedium} />
+            </div>
+
+        </div >
 	
   )
 }
