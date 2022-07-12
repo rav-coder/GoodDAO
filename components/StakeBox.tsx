@@ -1,11 +1,12 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { useState } from 'react'
-import { useContractWrite } from 'wagmi'
+import React, { useEffect, useState } from 'react'
+import { useContractWrite, useContractRead, useBalance, useAccount } from 'wagmi'
 import { GIVE_ABI, GIVE_TOKEN, GOOD_ABI, GOOD_TOKEN } from '../utils/constants'
 import { faClose } from '@fortawesome/free-solid-svg-icons'
+import { parseUnits } from 'ethers/lib/utils'
+import {toast} from 'react-toastify'
 
 const StakeBox = () => {
-
 
 	const [showModal, setShowModal] = useState(false)
 
@@ -13,19 +14,48 @@ const StakeBox = () => {
 	const [withdrawAmnt, setWithdrawAmnt] = useState('0')
 	const [claimAmnt, setClaimAmnt] = useState('0')
 
+	const [goodBalance, setGoodBalance] = useState('Fetching')
+	const [giveBalance, setGiveBalance] = useState('Fetching')
+
+	
+
+	const {address} = useAccount()
+
+	const getGoodBalance = useBalance({
+		addressOrName: address,
+		token: GOOD_TOKEN,
+	})
+
+	const getGiveBalance = useBalance({
+		addressOrName: address,
+		token: GIVE_TOKEN
+	})
+
+	useEffect(() => {
+		setGoodBalance(getGoodBalance.data?.formatted!)
+		setGiveBalance(getGiveBalance.data?.formatted!)
+		
+	},[getGoodBalance.data?.formatted, getGiveBalance.data?.formatted])
+	
+
 	const deposit = useContractWrite({
 		addressOrName: GIVE_TOKEN,
 		contractInterface: GIVE_ABI,
 		functionName: 'deposit',
 		args: [
-			'', // pid
-			parseInt(approveAmnt)
+			0, // pid
+			parseUnits(approveAmnt,18)
 		],
+		overrides: {
+			gasLimit: 200000
+		},
 		onSuccess() {
-			console.log('Deposited')
-		}
+			toast.success('Deposited')
+		},
+		onError(error) {
+			toast.error(error.message)
+		},
 	})
-
 
 	const approve = useContractWrite({
 		addressOrName: GOOD_TOKEN,
@@ -33,12 +63,15 @@ const StakeBox = () => {
 		functionName: 'approve',
 		args: [
 			GIVE_TOKEN, //
-			parseInt(approveAmnt)
+			parseUnits(approveAmnt, 18)
 
 		],
 		onSuccess() {
-			console.log('Approved')
+			toast.success('Approved')
 			setShowModal(true)
+		},
+		onError(error) {
+			toast.error(error.message)
 		}
 	})
 
@@ -47,17 +80,31 @@ const StakeBox = () => {
 		contractInterface: GIVE_ABI,
 		functionName: 'withdraw',
 		args: [
-			'', // pid
-			parseInt(withdrawAmnt)
+			0, // pid
+			parseUnits(withdrawAmnt,18)
 		],
 		onSuccess() {
-			console.log('Withdrawn')
+			toast.success('Withdrawn')
+		},
+		onError(error) {
+			toast.error(error.message)
 		}
 	})
 
-	const claimClick = () => {
-
-	}
+	const claimGood = useContractWrite({
+		addressOrName: GIVE_TOKEN,
+		contractInterface: GIVE_ABI,
+		functionName: 'claimGOOD',
+		args: [
+			0 //pid
+		],
+		onSuccess() {
+			toast.success('Claimed')
+		},
+		onError(error) {
+			toast.error(error.message)
+		}
+	})
 
   return (
 	
@@ -78,7 +125,7 @@ const StakeBox = () => {
 					<p className='pt-3 pl-2 text-lg font-bold'>{approveAmnt}</p>
 					<div className='absolute left-1/2 -translate-x-1/2 bottom-2'><button className='p-2 text-white font-bold rounded-md bg-green' onClick={()=>{deposit.write()}}>Deposit</button></div>
 				</div>
-					</div>
+			</div>
 		</div>
 		}
 
@@ -93,15 +140,15 @@ const StakeBox = () => {
 			<div>
 				<div className='flex justify-between'>
 					<h1 className='items-start'>Balance: </h1>
-					<h1 className='items-end'>0</h1>
+					<h1 className='items-end'>{goodBalance}</h1>
 				</div>
 				<div className='relative'>
 			</div>
 				<input className='rounded-lg h-8 bg-gray border border-solid w-full'  type={'number'} value={approveAmnt} onChange={(e) => {setApproveAmnt(e.currentTarget.value)}}/>
 			</div>
 			<button className={`m-auto text-white bg-green rounded-md py-2 px-3 mt-2 font-bold`} onClick={
-				//() => approve.write()
-				() => setShowModal(true)
+				() => approve.write()
+				//() => setShowModal(true)
 				}>Approve</button>
 		</div>
 
@@ -110,7 +157,7 @@ const StakeBox = () => {
 		<div className='flex flex-col pt-14'>
 			<div className='flex justify-between'>
 				<h1 className='items-start'>GIVE Balance: </h1>
-				<h1 className='items-end'>0</h1>
+				<h1 className='items-end'>{giveBalance}</h1>
 			</div>
 			<div className='relative'>
 				<input className='rounded-lg h-8 bg-gray border border-solid w-full' type={'number'} value={withdrawAmnt} onChange={(e) => {setWithdrawAmnt(e.currentTarget.value)}}/>
@@ -125,7 +172,7 @@ const StakeBox = () => {
 				<h1 className='items-start'>Claimable GOOD</h1>
 				<h1 className='items-end'>0</h1>
 			</div>
-			<button className={`m-auto text-white bg-green rounded-md py-2 px-3 mt-2 font-bold`} onClick={claimClick}>Claim GOOD</button>
+			<button className={`m-auto text-white bg-green rounded-md py-2 px-3 mt-2 font-bold`} onClick={()=> {claimGood.write()}}>Claim GOOD</button>
 		</div>
 	</div>
   )
