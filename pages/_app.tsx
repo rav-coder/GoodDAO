@@ -2,12 +2,12 @@ import '../styles/globals.css'
 import Layout from '../components/Layout'
 import type { AppProps } from 'next/app'
 import '../styles/styling.css'
-import { WagmiConfig, createClient, defaultChains, configureChains } from 'wagmi'
+import { WagmiConfig, createClient, defaultChains, configureChains, chain } from 'wagmi'
 
 import { publicProvider } from 'wagmi/providers/public'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 
-const { chains, provider, webSocketProvider} = configureChains(defaultChains, [publicProvider()])
+const { chains, provider, webSocketProvider} = configureChains([chain.polygonMumbai], [publicProvider()])
 
 const client = createClient({
   autoConnect: true,
