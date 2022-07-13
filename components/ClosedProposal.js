@@ -6,7 +6,7 @@ export default function Proposal() {
         <>
 
         {pendingProposals.map((proposal) => (
-            <div className={styles.proposal}>
+            <div key={proposal.id} className={styles.proposal}>
                 <p>
                     {proposal.description}
                 </p>
