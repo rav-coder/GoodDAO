@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useEffect, useState } from 'react'
 import { useContractWrite, useContractRead, useBalance, useAccount } from 'wagmi'
-import { GIVE_ABI, GIVE_TOKEN, GOOD_ABI, GOOD_TOKEN } from '../utils/constants'
+import { IGIVE_ABI, IGIVE_TOKEN, GOOD_ABI, GOOD_TOKEN } from '../utils/constants'
 import { faClose } from '@fortawesome/free-solid-svg-icons'
 import { parseUnits } from 'ethers/lib/utils'
 import {toast} from 'react-toastify'
@@ -17,18 +17,18 @@ const StakeBox = () => {
 	const [goodBalance, setGoodBalance] = useState('Fetching')
 	const [giveBalance, setGiveBalance] = useState('Fetching')
 
-	
-
 	const {address} = useAccount()
 
 	const getGoodBalance = useBalance({
 		addressOrName: address,
 		token: GOOD_TOKEN,
+		chainId: 80001
 	})
 
 	const getGiveBalance = useBalance({
 		addressOrName: address,
-		token: GIVE_TOKEN
+		token: IGIVE_TOKEN,
+		chainId: 8001
 	})
 
 	useEffect(() => {
@@ -39,16 +39,14 @@ const StakeBox = () => {
 	
 
 	const deposit = useContractWrite({
-		addressOrName: GIVE_TOKEN,
-		contractInterface: GIVE_ABI,
+		addressOrName: IGIVE_TOKEN,
+		contractInterface: IGIVE_ABI,
 		functionName: 'deposit',
+		chainId: 80001,
 		args: [
-			0, // pid
-			parseUnits(approveAmnt,18)
+			1, // pid
+			approveAmnt !== '' ? parseUnits(approveAmnt, 18) : 0
 		],
-		overrides: {
-			gasLimit: 200000
-		},
 		onSuccess() {
 			toast.success('Deposited')
 		},
@@ -61,9 +59,11 @@ const StakeBox = () => {
 		addressOrName: GOOD_TOKEN,
 		contractInterface: GOOD_ABI,
 		functionName: 'approve',
+		chainId: 80001,
 		args: [
-			GIVE_TOKEN, //
-			parseUnits(approveAmnt, 18)
+			IGIVE_TOKEN, //
+			//approveAmnt !== '' ? parseUnits(approveAmnt, 18) : 0
+			'0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
 
 		],
 		onSuccess() {
@@ -76,12 +76,13 @@ const StakeBox = () => {
 	})
 
 	const withdraw = useContractWrite({
-		addressOrName: GIVE_TOKEN,
-		contractInterface: GIVE_ABI,
+		addressOrName: IGIVE_TOKEN,
+		contractInterface: IGIVE_ABI,
+		chainId: 80001,
 		functionName: 'withdraw',
 		args: [
-			0, // pid
-			parseUnits(withdrawAmnt,18)
+			1, // pid
+			withdrawAmnt !== '' ? parseUnits(withdrawAmnt, 18) : 0
 		],
 		onSuccess() {
 			toast.success('Withdrawn')
@@ -92,11 +93,12 @@ const StakeBox = () => {
 	})
 
 	const claimGood = useContractWrite({
-		addressOrName: GIVE_TOKEN,
-		contractInterface: GIVE_ABI,
+		addressOrName: IGIVE_TOKEN,
+		contractInterface: IGIVE_ABI,
 		functionName: 'claimGOOD',
+		chainId: 80001,
 		args: [
-			0 //pid
+			1 //pid
 		],
 		onSuccess() {
 			toast.success('Claimed')
@@ -144,12 +146,13 @@ const StakeBox = () => {
 				</div>
 				<div className='relative'>
 			</div>
-				<input className='rounded-lg h-8 bg-gray border border-solid w-full'  type={'number'} value={approveAmnt} onChange={(e) => {setApproveAmnt(e.currentTarget.value)}}/>
+				<input className='rounded-lg h-8 bg-gray border border-solid w-full'  type={'number'} value={approveAmnt} onChange={(e) => {setApproveAmnt(e.currentTarget.value)}} min={0}/>
 			</div>
 			<button className={`m-auto text-white bg-green rounded-md py-2 px-3 mt-2 font-bold`} onClick={
-				() => approve.write()
-				//() => setShowModal(true)
-				}>Approve</button>
+				
+				//() => approve.write()
+				() => setShowModal(true)
+				}>Deposit</button>
 		</div>
 
 
@@ -160,7 +163,7 @@ const StakeBox = () => {
 				<h1 className='items-end'>{giveBalance}</h1>
 			</div>
 			<div className='relative'>
-				<input className='rounded-lg h-8 bg-gray border border-solid w-full' type={'number'} value={withdrawAmnt} onChange={(e) => {setWithdrawAmnt(e.currentTarget.value)}}/>
+				<input className='rounded-lg h-8 bg-gray border border-solid w-full' type={'number'} value={withdrawAmnt} onChange={(e) => {setWithdrawAmnt(e.currentTarget.value)}} min={0}/>
 			</div>
 			<button className={`m-auto text-white bg-purple rounded-md py-2 px-3 mt-2 font-bold`} onClick={() => withdraw.write()}>Withdraw</button>
 		</div>
