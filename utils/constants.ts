@@ -1,5 +1,5 @@
-export const GOOD_TOKEN = '0x7012C6cA8D08faEcA22ab9931F8A60a7eEa53A47'
-export const GIVE_TOKEN = '0xDA09167F472B5fe816a7eA4F40A0e3C2d0A07Eb2'
+export const GOOD_TOKEN = '0xEe4d8767C16f2E4826b414f1D06f40a5dBE6c42e'
+export const GIVE_TOKEN = '0x493e6BDfd1934939366D1BF976F2fb4d2dd39d50'
 export const RPC_URL = 'https://rpc.ankr.com/polygon_mumbai'
 
 export const GIVE_ABI = [
