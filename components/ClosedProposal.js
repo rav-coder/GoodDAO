@@ -1,4 +1,4 @@
-import styles from '../styles/PendingProposal.module.css'
+import styles from '../styles/ProposalPages.module.css'
 import pendingProposals from '../data/closedProposals.json'
 
 export default function Proposal() {
