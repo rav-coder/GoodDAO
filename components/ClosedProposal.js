@@ -1,4 +1,4 @@
-import styles from '../styles/PendingProposal.module.css'
+import styles from '../styles/ProposalPages.module.css'
 import pendingProposals from '../data/closedProposals.json'
 
 export default function Proposal() {
@@ -6,7 +6,7 @@ export default function Proposal() {
         <>
 
         {pendingProposals.map((proposal) => (
-            <div className={styles.proposal}>
+            <div key={proposal.id} className={styles.proposal}>
                 <p>
                     {proposal.description}
                 </p>
