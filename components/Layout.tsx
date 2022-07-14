@@ -3,6 +3,8 @@ import React, { ReactNode } from 'react'
 import Nav from './Nav'
 import background from '../public/bg-hero.png'
 import Footer from './Footer'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 type Props = {
 	children?: ReactNode
@@ -18,6 +20,17 @@ const Layout = ({ children }: Props) => (
 		<main className='h-screen'>
 			{children}
 		</main>
+		<ToastContainer
+			position="bottom-left"
+			autoClose={3000}
+			hideProgressBar={false}
+			newestOnTop={false}
+			closeOnClick
+			rtl={false}
+			pauseOnFocusLoss
+			draggable
+			pauseOnHover
+		/>
 		<Footer/>
 		
 	</div>

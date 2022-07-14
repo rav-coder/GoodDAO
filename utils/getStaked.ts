@@ -1,12 +1,14 @@
 import { ethers } from "ethers";
-import { GIVE_ABI, GIVE_TOKEN, RPC_URL } from "./constants";
+import { parseUnits } from "ethers/lib/utils";
+import { IGIVE_ABI, IGIVE_TOKEN, RPC_URL } from "./constants";
 
 const provider = new ethers.providers.JsonRpcProvider(RPC_URL)
-const abi = GIVE_ABI
+const abi = IGIVE_ABI
 
-const GiveToken = new ethers.Contract(GIVE_TOKEN, abi, provider)
+const GiveToken = new ethers.Contract(IGIVE_TOKEN, abi, provider)
 
 export const getStaked = async () => {
 	let supply = await GiveToken.totalSupply()
-	return supply.toString()
+	
+	return supply.toString().slice(0,-18)
 }
