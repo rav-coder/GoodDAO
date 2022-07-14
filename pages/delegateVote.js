@@ -15,6 +15,11 @@ export default function delegateVote() {
                 <input className={styles.input1} type={'text'} />
                 <br/>
                 <br/>
+                <button className={styles.submit}>
+                    Delegate
+                </button>
+                <br/>
+                <br/>
                 <p className={styles.p}>
                     By delegating your voting rights, you allow the recipient user to vote any decision on a proposal without your consent, however you can take back your rights by entering your address above and delegating back to yourself. The recipient does not take any ownership of your dCULT tokens.
                 </p>
