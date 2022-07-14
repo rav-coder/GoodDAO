@@ -49,6 +49,7 @@ const StakeBox = () => {
 		],
 		onSuccess() {
 			toast.success('Deposited')
+			setShowModal(false)
 		},
 		onError(error) {
 			toast.error(error.message)
@@ -173,7 +174,7 @@ const StakeBox = () => {
 		<div className='flex flex-col pt-14 pb-14'>
 			<div className='flex justify-between'>
 				<h1 className='items-start'>Claimable GOOD</h1>
-				<h1 className='items-end'>0</h1>
+				<h1 className='items-end'>{claimAmnt}</h1>
 			</div>
 			<button className={`m-auto text-white bg-green rounded-md py-2 px-3 mt-2 font-bold`} onClick={()=> {claimGood.write()}}>Claim GOOD</button>
 		</div>
