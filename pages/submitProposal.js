@@ -54,7 +54,7 @@ export default function submitProposals() {
                     <br/>
                     <h2>Provide the percentage of the token supply being offered in return for 13 Ethereum worth of investment.</h2>
                     <br/> 0.25
-                    <input className={styles.input2} type={'range'} min={0.25} max={5} step={0.25}/>
+                    <input className={styles.input2} type={'range'} min={1} max={5} step={0.25}/>
                     5
                     
 
