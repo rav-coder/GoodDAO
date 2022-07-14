@@ -8,7 +8,6 @@ const Connect = () => {
 	const { connect, connectors, error, isLoading, pendingConnector } = useConnect()
 
 	useEffect(() => {
-
 		
 		const callData = () => {
 			setBtnTxt(
@@ -41,7 +40,6 @@ const Connect = () => {
 			</div>
 		)
 	}
-
 
 	else{
 		return (btnTxt
