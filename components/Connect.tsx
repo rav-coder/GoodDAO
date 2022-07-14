@@ -10,7 +10,6 @@ const Connect = () => {
 	})
 
 	useEffect(() => {
-
 		
 		const callData = () => {
 			setBtnTxt(
@@ -43,7 +42,6 @@ const Connect = () => {
 			</div>
 		)
 	}
-
 
 	else{
 		return (btnTxt
