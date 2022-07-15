@@ -15,14 +15,14 @@ const Home: NextPage = () => {
       <div>
         <div className="flex h-screen space-x-10 p-10 items-center">
           <div className='flex flex-1 flex-col h-screen pt-[200px] pb-60 justify-between px-20'>
-            <HomepageItem text={"CULT Price"} price={0.00001382}/>
+            <HomepageItem text={"GOOD Price"} price={0.00001382}/>
             <HomepageItem text={"Treasury Balance"} price={765.822}/>
             <HomepageItem text={"Marketcap"} price={58530563}/>
           </div>
           <div className='flex flex-1 flex-col h-screen pt-[200px] pb-60 justify-between px-20'>
             <HomepageItem text={"Total Funds Sent"} price={845}/>
             <HomepageItem text={"Total Value Locked"} price={36711503.212}/>
-            <HomepageItem text={"CULT Burned"} price={1743786178461}/>
+            <HomepageItem text={"GOOD Burned"} price={1743786178461}/>
           </div>
           
 

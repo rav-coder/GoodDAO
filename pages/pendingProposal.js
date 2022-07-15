@@ -1,5 +1,13 @@
+import styles from '../styles/ProposalPages.module.css'
+import Proposal from '../components/PendingProposal'
+
 export default function pendingProposal() {
     return (
-        <div>Hello World</div>
+        <>
+            <h1 className={styles.header}>Pending Proposals</h1>
+            <div className={styles.box}>
+                <Proposal/>
+            </div>
+        </>
     )
 }

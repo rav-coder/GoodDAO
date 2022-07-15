@@ -6,10 +6,11 @@ const Connect = () => {
 
 	const [btnTxt, setBtnTxt] = useState(<div></div>)
 
-	const { connect, connectors, error, isLoading, pendingConnector } = useConnect()
+	const { connect, connectors, error, isLoading, pendingConnector } = useConnect({
+		chainId: 80001
+	})
 
 	useEffect(() => {
-
 		
 		const callData = () => {
 			setBtnTxt(
@@ -41,7 +42,6 @@ const Connect = () => {
 			</div>
 		)
 	}
-
 
 	else{
 		return (btnTxt

@@ -19,7 +19,7 @@ const Nav = () => {
 					<Connect/>
 				</div>
 			</nav>
-			<div className="hover:cursor-pointer fixed top-0 z-[5] h-24 w-24 bg-[url('../public/logo.jpg')] bg-contain bg-no-repeat bg-white"></div>
+			<div className="hover:cursor-pointer fixed top-0 z-[5] h-24 w-24 bg-[url('../public/logo.jpg')] bg-contain bg-no-repeat bg-slate-200 rounded-full"></div>
 
 		</>
 	)
