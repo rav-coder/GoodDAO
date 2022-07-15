@@ -1,14 +1,16 @@
 [
     {
-     "id": 1,
+     "id": 0,
      "description": "proposal 1",
      "approved": 420,
-     "rejected": 69
+     "rejected": 69,
+     "name": "hehexd"
     },
     {
-     "id": 2,
+     "id": 1,
      "description": "proposal 2",
      "approved": 420,
-     "rejected": 69
+     "rejected": 69,
+     "name": "hehexd"
     }
 ]

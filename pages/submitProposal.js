@@ -1,12 +1,42 @@
 import styles from '../styles/ProposalPages.module.css'
 import Proposal from '../components/PendingProposal'
+import { useState } from 'react'
+import pendingProposals from '../data/pendingProposals.json'
 
 export default function submitProposals() {
+
+    const [proposals, submitProposal] = useState(pendingProposals)
+
+    const [name, setName] = useState('')
+    const [description, setDescription] = useState('')
+   
+
+    const submit = (e) => {
+        const id = Object.keys(pendingProposals).length
+        console.log(id)
+        const newProposal = { id, ...e}
+        submitProposal([proposals, newProposal])
+
+    }
+
+    const onSubmit = (e) => {
+        e.preventDefault()
+        if(!name) {
+            alert('fill the blanks')
+            return
+        }
+
+        submit({name, description})
+        setName('')
+        setDescription('')
+
+    }
+
     return (
         <>
             <h1 className={styles.header}>Submit Proposals</h1>
             <div className={styles.box}>
-                <form>
+                <form onSubmit={onSubmit}>
                     <h2>Name of the Guardian submitting the Proposal.</h2>
                     <input className={styles.input1} type={'text'}/>
 
@@ -23,17 +53,12 @@ export default function submitProposals() {
                     <br/>
                     <br/>
                     <h2>What is the name of the Project?</h2>
-                    <input className={styles.input1} type={'text'}/>
+                    <input className={styles.input1}  type={'text'} value={name} onChange={(e) => setName(e.target.value)} />
 
                     <br/>
                     <br/>
                     <h2>Provide a short description of the Project, and why it is suitable for investment from the CULT.</h2>
-                    <input className={styles.input1} type={'text'}/>
-
-                    <br/>
-                    <br/>
-                    <h2>Provide a short description of the Project, and why it is suitable for investment from the CULT.</h2>
-                    <textarea className={styles.input1} type={'text'}/>
+                    <textarea className={styles.input1} type={'text'} value={description} onChange={(e) => setDescription(e.target.value)}/>
 
                     <br/>
                     <br/>
@@ -53,7 +78,7 @@ export default function submitProposals() {
                     <br/>
                     <br/>
                     <h2>Provide the percentage of the token supply being offered in return for 13 Ethereum worth of investment.</h2>
-                    <br/> 0.25
+                    <br/> 1
                     <input className={styles.input2} type={'range'} min={1} max={5} step={0.25}/>
                     5
                     
@@ -87,14 +112,9 @@ export default function submitProposals() {
                     <br/>
                     <br/>
 
-                    <button className={styles.submit}>
-                        Submit
-                    </button>
-                    
-                    
+                    <input type='submit' className={styles.submit} value='Submit'/>
+                       
                 </form>
-                
-                
             </div>
         </>
     )
