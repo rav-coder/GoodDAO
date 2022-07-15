@@ -1,5 +1,3 @@
-import { useContractRead, useContractReads } from 'wagmi'
-import { GIVE_ABI, GIVE_TOKEN, GOOD_ABI, GOOD_TOKEN } from '../utils/constants'
 import BigNumber from 'bignumber.js'
 
 const BSC_BLOCK_TIME = 1

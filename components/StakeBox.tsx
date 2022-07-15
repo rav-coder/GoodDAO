@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useContractWrite, useContractRead, useBalance, useAccount } from 'wagmi'
 import { IGIVE_ABI, IGIVE_TOKEN, GOOD_ABI, GOOD_TOKEN } from '../utils/constants'
 import { faClose } from '@fortawesome/free-solid-svg-icons'
-import { parseUnits } from 'ethers/lib/utils'
+import { formatUnits, parseUnits } from 'ethers/lib/utils'
 import {toast} from 'react-toastify'
 
 const StakeBox = () => {
@@ -12,30 +12,47 @@ const StakeBox = () => {
 
 	const [approveAmnt, setApproveAmnt] = useState('0')
 	const [withdrawAmnt, setWithdrawAmnt] = useState('0')
-	const [claimAmnt, setClaimAmnt] = useState('0')
 
 	const [goodBalance, setGoodBalance] = useState('Fetching')
 	const [giveBalance, setGiveBalance] = useState('Fetching')
+	const [claimable, setClaimable] = useState('Fetching')
 
 	const {address} = useAccount()
 
 	const getGoodBalance = useBalance({
 		addressOrName: address,
 		token: GOOD_TOKEN,
-		chainId: 80001
+		watch: true,
+		chainId: 80001,
 	})
 
 	const getGiveBalance = useBalance({
 		addressOrName: address,
 		token: IGIVE_TOKEN,
-		chainId: 8001
+		watch: true,
+		chainId: 80001,
 	})
 
-	useEffect(() => {
-		setGoodBalance(getGoodBalance.data?.formatted!)
-		setGiveBalance(getGiveBalance.data?.formatted!)
-		
-	},[getGoodBalance.data?.formatted, getGiveBalance.data?.formatted])
+
+	const pendingGood = useContractRead({
+		addressOrName: IGIVE_TOKEN,
+		contractInterface: IGIVE_ABI,
+		functionName: 'pendingGOOD',
+		watch: true,
+		chainId: 80001,
+		args: [
+			1,
+			address
+		],
+	})
+
+	useEffect(
+		() => {
+			setGoodBalance(getGoodBalance.data?.formatted.length! > 7 ? getGoodBalance.data?.formatted.slice(0,7)! + '...' :  getGoodBalance.data?.formatted! )
+			setGiveBalance(getGiveBalance.data?.formatted.length! > 7 ? getGiveBalance.data?.formatted.slice(0,1)! + '...' : getGiveBalance.data?.formatted!)
+			setClaimable(formatUnits(pendingGood.data == undefined ? 0 : pendingGood.data, 18).length > 7 ? formatUnits(pendingGood.data == undefined ? 0 : pendingGood.data, 18).slice(0,7) + '...' : formatUnits(pendingGood.data == undefined ? 0 : pendingGood.data, 18))
+		},[getGiveBalance.data?.formatted, getGoodBalance.data?.formatted, pendingGood.data]
+	)
 	
 
 	const deposit = useContractWrite({
@@ -93,6 +110,8 @@ const StakeBox = () => {
 		}
 	})
 
+
+
 	const claimGood = useContractWrite({
 		addressOrName: IGIVE_TOKEN,
 		contractInterface: IGIVE_ABI,
@@ -133,8 +152,9 @@ const StakeBox = () => {
 		}
 
 		{/* Header */}
-		<div className='pt-10'>
-			<h1 className='font-bold text-black text-center text-xl'>Stake Good</h1>
+		{/* <button className='ml-auto -mr-8 mt-2'><FontAwesomeIcon icon={faRotateRight}/></button> */}
+		<div className=''>
+			<h1 className='font-bold text-black text-center text-xl pt-6'>Stake GOOD</h1>
 		</div>
 
 
@@ -174,7 +194,7 @@ const StakeBox = () => {
 		<div className='flex flex-col pt-14 pb-14'>
 			<div className='flex justify-between'>
 				<h1 className='items-start'>Claimable GOOD</h1>
-				<h1 className='items-end'>{claimAmnt}</h1>
+				<h1 className='items-end'>{claimable}</h1>
 			</div>
 			<button className={`m-auto text-white bg-green rounded-md py-2 px-3 mt-2 font-bold`} onClick={()=> {claimGood.write()}}>Claim GOOD</button>
 		</div>
