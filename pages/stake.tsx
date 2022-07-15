@@ -6,7 +6,7 @@ import { getBurned } from '../utils/getBurned'
 import { getStaked } from '../utils/getStaked'
 import { getThreshold } from '../utils/getThreshold'
 import { useContractRead, useContractReads } from 'wagmi'
-import { GIVE_ABI, GIVE_TOKEN, GOOD_ABI, GOOD_TOKEN, GIVE_DAI_LP, DAI_TOKEN, DAI_ABI } from '../utils/constants'
+import { IGIVE_ABI, IGIVE_TOKEN, GOOD_ABI, GOOD_TOKEN, GIVE_DAI_LP, DAI_TOKEN, DAI_ABI } from '../utils/constants'
 import { BigNumber } from 'ethers'
 
 const Stake = () => {
@@ -91,13 +91,13 @@ const Stake = () => {
 			setApr(await getApr(tokenPriceVsQuote))
 		}
 		callData()
-	}, []);
+	}, [tokenPriceVsQuote]);
 
 
   return (
 	<div className='flex h-screen space-x-10 p-10 items-center'>
 		<div className='flex flex-1 flex-col h-screen pt-[200px] pb-60 justify-between px-20'>
-			<InfoBox title="Price" text={tokenPriceVsQuote.toString()}/>
+			<InfoBox title="Price" text={'$' + tokenPriceVsQuote.toString()}/>
 			<InfoBox title="Token Threshold" text={threshold}/>
 		</div>
 		<div className=' flex-1 '>
