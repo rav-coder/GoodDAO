@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useAccount, useConnect, useDisconnect } from 'wagmi'
+import truncateWalletAddress from '../utils/truncateWalletAddress'
 
 const Connect = () => {
 
@@ -36,8 +37,7 @@ const Connect = () => {
 	if (isConnected && connector) {
 		return (
 			<div>
-				<div>{address}</div>
-				<div>Connected to {connector.name}</div>
+				<div>{truncateWalletAddress(address || 'N/A')}</div>
 				<button onClick={disconnectClick}>Disconnect</button>
 			</div>
 		)
