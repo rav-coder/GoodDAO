@@ -2,12 +2,9 @@ import React, { useEffect, useState } from 'react'
 import InfoBox from '../components/InfoBox'
 import StakeBox from '../components/StakeBox'
 import { getApr } from '../utils/getApr'
-import { getBurned } from '../utils/getBurned'
-import { getStaked } from '../utils/getStaked'
-import { getThreshold } from '../utils/getThreshold'
 import { useContractRead, useContractReads } from 'wagmi'
 import { IGIVE_ABI, IGIVE_TOKEN, GOOD_ABI, GOOD_TOKEN, GIVE_DAI_LP, DAI_TOKEN, DAI_ABI } from '../utils/constants'
-import { BigNumber } from 'ethers'
+import { formatUnits } from 'ethers/lib/utils'
 
 const Stake = () => {
 
@@ -25,7 +22,7 @@ const Stake = () => {
 		addressOrName: GOOD_TOKEN,
 		contractInterface: GOOD_ABI,
 		functionName: 'totalSupply',
-	
+		watch: true,
 		onSuccess(data) {
 			//console.log('Success', data)
 			totalSupply = parseFloat(data.toString()) / (10 ** 18) + "";
@@ -38,7 +35,7 @@ const Stake = () => {
 		addressOrName: GOOD_TOKEN,
 		contractInterface: GOOD_ABI,
 		functionName: 'balanceOf',
-		
+		watch: true,
 		args: [
 			GIVE_DAI_LP
 		],
@@ -54,7 +51,7 @@ const Stake = () => {
 		addressOrName: DAI_TOKEN,
 		contractInterface: DAI_ABI,
 		functionName: 'balanceOf',
-		
+		watch: true,
 		args: [
 			GIVE_DAI_LP
 		],
@@ -70,11 +67,21 @@ const Stake = () => {
 		addressOrName: GOOD_TOKEN,
 		contractInterface: GOOD_ABI,
 		functionName: 'decimals',
-
+		watch: true,
 		onSuccess(data) {
 			//console.log('Success', data)
 			setDecimals(parseFloat(data.toString()));
 			//console.log(totalSupply);
+		},
+	})
+	
+	useContractRead({
+		addressOrName: IGIVE_TOKEN,
+		contractInterface: IGIVE_ABI,
+		functionName: 'totalGOODStaked',
+		watch: true,
+		onSuccess(data) {
+			setStaked(formatUnits(data, 18))
 		},
 	})
 
@@ -84,10 +91,6 @@ const Stake = () => {
 	
 	useEffect(() => {
 		const callData = async () => {
-			//setBurned(await getBurned())
-			setStaked(await getStaked())
-			//setThreshold(await getThreshold())
-			//setThreshold(totalSupply)
 			setApr(await getApr(tokenPriceVsQuote))
 		}
 		callData()
