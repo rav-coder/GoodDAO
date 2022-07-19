@@ -134,8 +134,11 @@ const StakeBox = () => {
 		
 		{/* Deposit Modal */}
 		{showModal && 
-		<div className='fixed top-0 left-0 z-10 w-full h-full bg-black bg-opacity-40'>
-			<div className='absolute inset-1/2 bg-white -translate-x-1/2 -translate-y-1/2 z-10 w-1/5 h-1/5 rounded-lg shadow-2xl opacity-100'>
+		<div>
+			<div onClick={()=>{setShowModal(false)}} className='fixed top-0 left-0 z-10 w-full h-full bg-black bg-opacity-40'>
+			
+			</div>
+			<div className='absolute inset-1/2 bg-white -translate-x-1/2 -translate-y-1/2 z-[11] w-1/5 h-1/5 rounded-lg shadow-2xl opacity-100'>
 				{/* Header */}
 				<div className='flex justify-start shadow-md'>
 					<p className='text-black font-bold text-xl py-2 inline ml-2'>Deposit</p>
@@ -149,6 +152,7 @@ const StakeBox = () => {
 				</div>
 			</div>
 		</div>
+
 		}
 
 		{/* Header */}
@@ -162,7 +166,7 @@ const StakeBox = () => {
 		<div className='flex flex-col pt-14'>
 			<div>
 				<div className='flex justify-between'>
-					<h1 className='items-start'>Balance: </h1>
+					<h1 className='items-start'>GOOD Balance: </h1>
 					<h1 className='items-end'>{goodBalance}</h1>
 				</div>
 				<div className='relative'>
@@ -180,7 +184,7 @@ const StakeBox = () => {
 		{/* Withdraw Section */}
 		<div className='flex flex-col pt-14'>
 			<div className='flex justify-between'>
-				<h1 className='items-start'>GIVE Balance: </h1>
+				<h1 className='items-start'>iGIVE Balance: </h1>
 				<h1 className='items-end'>{giveBalance}</h1>
 			</div>
 			<div className='relative'>
