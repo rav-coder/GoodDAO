@@ -17,7 +17,7 @@ const Connect = () => {
 			<div>
 				{connectors.map((connector) => (
 					<button disabled={!connector?.ready} key={connector.id} onClick={() => connect({ connector })}>
-					{connector?.name}
+					{'Connect with Metamask'}
 					{!connector?.ready && ' (unsupported)'}
 					{isLoading && connector?.id === pendingConnector?.id && ' (connecting)'}
 					</button>
