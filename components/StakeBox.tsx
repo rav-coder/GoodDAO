@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useEffect, useState } from 'react'
-import { useContractWrite, useContractRead, useBalance, useAccount } from 'wagmi'
+import { useContractWrite, useContractRead, useBalance, useAccount, useWaitForTransaction } from 'wagmi'
 import { IGIVE_ABI, IGIVE_TOKEN, GOOD_ABI, GOOD_TOKEN } from '../utils/constants'
 import { faClose } from '@fortawesome/free-solid-svg-icons'
 import { formatUnits, parseUnits } from 'ethers/lib/utils'
@@ -41,9 +41,21 @@ const StakeBox = () => {
 		watch: true,
 		chainId: 80001,
 		args: [
-			1,
+			0,
 			address
 		],
+	})
+
+	const allowance = useContractRead({
+		addressOrName: GOOD_TOKEN,
+		contractInterface: GOOD_ABI,
+		functionName: 'allowance',
+		watch: true,
+		chainId: 80001,
+		args: [
+			address,
+			IGIVE_TOKEN
+		]
 	})
 
 	useEffect(
@@ -61,7 +73,7 @@ const StakeBox = () => {
 		functionName: 'deposit',
 		chainId: 80001,
 		args: [
-			1, // pid
+			0, // pid
 			approveAmnt !== '' ? parseUnits(approveAmnt, 18) : 0
 		],
 		onSuccess() {
@@ -72,6 +84,7 @@ const StakeBox = () => {
 			toast.error(error.message)
 		},
 	})
+
 
 	const approve = useContractWrite({
 		addressOrName: GOOD_TOKEN,
@@ -86,11 +99,14 @@ const StakeBox = () => {
 		],
 		onSuccess() {
 			toast.success('Approved')
-			setShowModal(true)
 		},
 		onError(error) {
 			toast.error(error.message)
-		}
+		},
+	})
+
+	const { data: waitData, isError: waitError, isLoading: waitLoading } = useWaitForTransaction({
+		hash: approve.data?.hash,
 	})
 
 	const withdraw = useContractWrite({
@@ -99,15 +115,17 @@ const StakeBox = () => {
 		chainId: 80001,
 		functionName: 'withdraw',
 		args: [
-			1, // pid
+			0, // pid
 			withdrawAmnt !== '' ? parseUnits(withdrawAmnt, 18) : 0
 		],
 		onSuccess() {
 			toast.success('Withdrawn')
+			
 		},
 		onError(error) {
 			toast.error(error.message)
-		}
+		},
+		
 	})
 
 
@@ -118,7 +136,7 @@ const StakeBox = () => {
 		functionName: 'claimGOOD',
 		chainId: 80001,
 		args: [
-			1 //pid
+			0 //pid
 		],
 		onSuccess() {
 			toast.success('Claimed')
@@ -127,6 +145,7 @@ const StakeBox = () => {
 			toast.error(error.message)
 		}
 	})
+
 
   return (
 	
@@ -141,12 +160,12 @@ const StakeBox = () => {
 			<div className='absolute inset-1/2 bg-white -translate-x-1/2 -translate-y-1/2 z-[11] w-1/5 h-1/5 rounded-lg shadow-2xl opacity-100'>
 				{/* Header */}
 				<div className='flex justify-start shadow-md'>
-					<p className='text-black font-bold text-xl py-2 inline ml-2'>Deposit</p>
+					<p className='text-black font-bold text-xl py-2 inline ml-2'>Confirm Deposit</p>
 					<button className='ml-auto p-2 mr-2' onClick={()=>{setShowModal(false)}}><FontAwesomeIcon icon={faClose}/></button>
 				</div>
 				{/* Body */}
 				<div className='h-full'>
-					<p className='pt-3 pl-2'>Deposit Amount?</p>
+					<p className='pt-3 pl-2'>Confirm Deposit Amount</p>
 					<p className='pt-3 pl-2 text-lg font-bold'>{approveAmnt}</p>
 					<div className='absolute left-1/2 -translate-x-1/2 bottom-2'><button className='p-2 text-white font-bold rounded-md bg-green' onClick={()=>{deposit.write()}}>Deposit</button></div>
 				</div>
@@ -173,12 +192,18 @@ const StakeBox = () => {
 			</div>
 				<input className='rounded-lg h-8 bg-gray border border-solid w-full'  type={'number'} value={approveAmnt} onChange={(e) => {setApproveAmnt(e.currentTarget.value)}} min={0}/>
 			</div>
-			<button className={`m-auto text-white bg-green rounded-md py-2 px-3 mt-2 font-bold`} onClick={
+
+			{allowance.data?.toHexString() == "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff" ? <button className={`m-auto text-white bg-green rounded-md py-2 px-3 mt-2 font-bold`} 
+				onClick={() => setShowModal(true)}
+				>Deposit</button> :
+
+				<button className={`m-auto text-white bg-green rounded-md py-2 px-3 mt-2 font-bold`} onClick={
 				
-				//() => approve.write()
-				() => setShowModal(true)
-				}>Deposit</button>
+					() => approve.write()}
+					disabled={waitLoading}>{waitLoading? 'Processing...' : 'Approve'}</button>
+			}
 		</div>
+			
 
 
 		{/* Withdraw Section */}
