@@ -41,7 +41,7 @@ const StakeBox = () => {
 		watch: true,
 		chainId: 80001,
 		args: [
-			1,
+			0,
 			address
 		],
 	})
@@ -61,7 +61,7 @@ const StakeBox = () => {
 		functionName: 'deposit',
 		chainId: 80001,
 		args: [
-			1, // pid
+			0, // pid
 			approveAmnt !== '' ? parseUnits(approveAmnt, 18) : 0
 		],
 		onSuccess() {
@@ -99,7 +99,7 @@ const StakeBox = () => {
 		chainId: 80001,
 		functionName: 'withdraw',
 		args: [
-			1, // pid
+			0, // pid
 			withdrawAmnt !== '' ? parseUnits(withdrawAmnt, 18) : 0
 		],
 		onSuccess() {
@@ -118,7 +118,7 @@ const StakeBox = () => {
 		functionName: 'claimGOOD',
 		chainId: 80001,
 		args: [
-			1 //pid
+			0 //pid
 		],
 		onSuccess() {
 			toast.success('Claimed')
@@ -175,9 +175,9 @@ const StakeBox = () => {
 			</div>
 			<button className={`m-auto text-white bg-green rounded-md py-2 px-3 mt-2 font-bold`} onClick={
 				
-				//() => approve.write()
-				() => setShowModal(true)
-				}>Deposit</button>
+				() => approve.write()
+				//() => setShowModal(true)
+				}>Approve & Deposit</button>
 		</div>
 
 
