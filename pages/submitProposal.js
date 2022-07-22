@@ -22,9 +22,9 @@ export default function submitProposals() {
     chainId: 80001,
     args: [
       [address],
-      [69],
-      ["signatures"],
-      [69],
+      [1],
+      [address],
+      [address],
       description
     ],
     onSuccess(data) {
