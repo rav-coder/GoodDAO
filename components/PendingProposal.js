@@ -2,46 +2,88 @@ import styles from '../styles/ProposalPages.module.css'
 import pendingProposals from '../data/pendingProposals.json'
 import { GOVERNANCE_ABI, GOVERNANCE_ADDRESS } from '../utils/constants'
 import { useContractRead, useContractReads } from 'wagmi'
+import { useState } from 'react';
+import { parseBytes32String } from 'ethers/lib/utils';
 
 export default function Proposal() {
 
 
+    const [proposalCount, setProposalCount] = useState(-999)
+    const [proposals, setProposals] = useState([])
+    const [index, setIndex] = useState(1)
 
-    var success = false
+    // gets the total number of proposals submitted
+    const getProposalCount = useContractRead({
+        addressOrName: GOVERNANCE_ADDRESS,
+        contractInterface: GOVERNANCE_ABI,
+        functionName: 'proposalCount',
+        watch: false,
+        onSuccess(data) {
 
-    const getProposals = useContractRead({
+            setProposalCount(parseInt(data))
+            console.log('Found proposal count', proposalCount)
+        }
+    })
+
+
+    // fetches proposals from blockchain
+    var getProposals = useContractRead({
         addressOrName: GOVERNANCE_ADDRESS,
         contractInterface: GOVERNANCE_ABI,
         functionName: 'proposals',
-        watch: true,
+        watch: false,
         args: [
-            1
+            index
         ],
-        // onSuccess(data) {
-        //     success = true
-        // 	console.log('Success', data)
-        // 	proposals = data
+        onSuccess(data) {
+            console.log('Success', data)
 
-        // }
+        }
     })
 
-    var proposals = JSON.stringify(getProposals.data)
-    
+
+    // const compile = () => {
+    //     for (let i = 0; i < proposalCount; i++) {
+    //         setIndex(i)
+    //         const newProposal = getProposals.data
+    //         setProposals([proposals, newProposal])
+    //     }
+    // }
+
+    // // takes all the proposals and puts them into an array
+    // const compileProposals = compile()
+
 
 
     return (
         <>
+            {console.log(proposals, proposalCount, index)}
+            {/* {success ? (<div>hello world</div>) : (console.log(success))} */}
 
-            {success ? (<div>hello world</div>) : (console.log(proposals))}
+            {/* {proposals.forEach(element => {
+                <div className={styles.proposal}>
+                <p>
+                    ID: {proposal.id}
+                </p>
+                <p>
+                    Approved: {proposal.forVotes}
+                </p>
+                <p>
+                    Rejected: {proposal.againstVotes}
+                </p>
+                <p>
+                    Time left: 99999999
+                </p>
+                <p>
+                    Total votes: 999999999
+                </p>
+            </div>
+            })}; */}
 
-            {/* proposals.array.forEach(element => {
-                
-            }); */}
 
 
 
-
-            {/* {proposals.map((proposal) => (
+            {/* {getProposals.data.map((proposal) => (
             <div className={styles.proposal}>
                 <p>
                     ID: {proposal.id}

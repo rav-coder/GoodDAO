@@ -22,10 +22,10 @@ export default function submitProposals() {
     chainId: 80001,
     args: [
       [address],
-      [1],
+      [0],
       [address],
-      [address],
-      description
+      [0x00],
+      JSON.stringify(description)
     ],
     onSuccess(data) {
       toast.success('Proposal Submitted!')
@@ -34,6 +34,35 @@ export default function submitProposals() {
       toast.error(error.message)
     }
   })
+
+  
+  
+    // const submit2 = async (data) => {
+    //   try {
+    //     const acc = await getAccount();
+    //     if (!acc.length) {
+    //       return 0;
+    //     }
+    //     const governanceContract = new web3.eth.Contract(
+    //       GOVERNANCE_ABI,
+    //       GOVERNANCE_ADDRESS
+    //     );
+    //     const submit3 = governanceContract.methods
+    //       .propose(
+    //         [governanceAddress],
+    //         [0],
+    //         ["_setInvesteeDetails(address)"],
+    //         [encodeParameters(["address"], [data.wallet])],
+    //         JSON.stringify(data)
+    //       )
+    //       .send({ from: account[0] });
+    //       return submit3;
+    //   } catch (error) {
+    //     if (error?.code === 4001) {
+    //       return error;
+    //     } else return { code: 4002 };
+    //   }
+    // };
 
   // // const [proposals, submitProposal] = useState(pendingProposals)
 
@@ -281,7 +310,7 @@ export default function submitProposals() {
     <>
       <h1 className={styles.header}>Submit Proposals</h1>
       <div className={styles.box}>
-        <form onSubmit={() => { submit.write() }}>
+        <form onSubmit={() => { submit2.write() }}>
           <h2>Name of the Guardian submitting the Proposal.</h2>
           <input className={styles.input1} type={'text'} />
 
@@ -303,7 +332,7 @@ export default function submitProposals() {
           <br />
           <br />
           <h2>Provide a short description of the Project, and why it is suitable for investment from the CULT.</h2>
-          <textarea className={styles.input1} type={'text'} value={description} onChange={(e) => { setDescription(e.target.value) }}/>
+          <textarea className={styles.input1} type={'text'} value={description} onChange={(e) => { setDescription(e.target.value) }} />
 
           <br />
           <br />
