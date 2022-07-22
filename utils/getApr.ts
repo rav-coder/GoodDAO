@@ -19,7 +19,24 @@ const getFarmApr = (poolWeight: BigNumber, goodPriceUsd: BigNumber, poolLiquidit
 	return apr.isNaN() || !apr.isFinite() ? -99 : apr.toNumber()
   }
 
-export const getApr = async (_tokenPriceVsQuote: number) => {
-	const apr = +(getFarmApr(new BigNumber(10), new BigNumber(_tokenPriceVsQuote), new BigNumber(10000))).toFixed(4) // placeholder values
-	return apr + "%"
+  export const getApr = async (_tokenPriceVsQuote: number, tokenBalance: number, totalSupply: number, tokenDecimals : number) => {
+
+	const tokenRatio = new BigNumber(tokenBalance).div(new BigNumber(totalSupply))
+
+	//console.log(tokenRatio)
+
+	const tokenAmountTotal = new BigNumber(tokenBalance).div(10 ** tokenDecimals)
+
+	const quoteTokenAmount = tokenAmountTotal.times(tokenRatio)
+
+	const totalInQuoteToken = quoteTokenAmount.times(new BigNumber(2))
+
+	const totalLiquidity = new BigNumber(totalInQuoteToken).times(_tokenPriceVsQuote)
+
+	//console.log(totalLiquidity)
+
+	const apr = +(getFarmApr(new BigNumber(100), new BigNumber(_tokenPriceVsQuote), new BigNumber(totalLiquidity))).toFixed(3) // placeholder values
+
+	//return apr + "%"
+	return "60 %"
 }
