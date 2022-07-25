@@ -2,9 +2,11 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCode, faHighlighter, faBook } from '@fortawesome/free-solid-svg-icons';
 import { faTwitter, faDiscord, faGithub, faInstagram, } from '@fortawesome/free-brands-svg-icons'
-
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 const Footer = () => {
+	const router = useRouter();
 
 	function copyElementText() {
 		// var text = document.getElementById("heading")!.innerText;
@@ -59,6 +61,22 @@ const Footer = () => {
 						<button onClick={copyElementText}>0x7cE...4b5</button>
 					</div>
 				</div>
+
+
+				<div className='absolute left-48'>
+					<div className='flex justify-center'>
+						{/* <h1>The current URL is {router.asPath}</h1> */}
+					</div>
+				</div>
+
+				{router.asPath == '/' ? <div></div> :
+					<div className='absolute ml-14 left-0'>
+						<div className='flex justify-center border-black border-2 px-2 rounded-md'>
+							<Link href={'/'}>Back</Link>
+						</div>
+					</div>
+				}
+
 			</div >
 		</div>
 
