@@ -15,7 +15,7 @@ const Nav = () => {
 					<NavButton link={'/faqs'} text={'FAQs'}/>
 					
 				</ul>
-				<div className='flex flex-1 justify-end'>
+				<div className='flex flex-1 justify-end pr-5'>
 					<Connect/>
 				</div>
 			</nav>

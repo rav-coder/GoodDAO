@@ -7,6 +7,6 @@ export const getBurned = async () => {
 	const burn1 = await getBalanceOf(wallet1)
 	const burn2 = await getBalanceOf(wallet2)
 	const total = burn1.add(burn2).toString()
-	//return total
-	return "$ 0.00001382"
+	return total
+	//return "$ 0.00001382"
 }
