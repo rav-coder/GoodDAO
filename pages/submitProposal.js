@@ -10,7 +10,7 @@ import { useContractReads, useContractWrite } from 'wagmi'
 import { IGIVE_ABI, IGIVE_TOKEN, GOOD_ABI, GOOD_TOKEN, GOVERNANCE_ABI, GOVERNANCE_ADDRESS } from '../utils/constants'
 
 
-export default function submitProposals() {
+export default function SubmitProposals() {
 
   const [address, setAddress] = useState('')
   const [description, setDescription] = useState('')
