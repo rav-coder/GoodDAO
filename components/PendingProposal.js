@@ -3,31 +3,40 @@ import pendingProposals from '../data/pendingProposals.json'
 import { GOVERNANCE_ABI, GOVERNANCE_ADDRESS } from '../utils/constants'
 import { useContractRead, useContractReads } from 'wagmi'
 import { useState } from 'react';
-import { parseBytes32String } from 'ethers/lib/utils';
 
-export default function Proposal() {
+export default function Proposal({index}) {
 
 
     const [proposalCount, setProposalCount] = useState(-999)
     const [proposals, setProposals] = useState([])
-    const [index, setIndex] = useState(1)
 
-    // gets the total number of proposals submitted
-    const getProposalCount = useContractRead({
-        addressOrName: GOVERNANCE_ADDRESS,
-        contractInterface: GOVERNANCE_ABI,
-        functionName: 'proposalCount',
-        watch: false,
-        onSuccess(data) {
+    const [id, setId] = useState(null)
+    const [approved, setApproved] = useState(0)
+    const [rejected, setRejected] = useState(0)
+    const [abstained, setAbstained] = useState(0)
+    const [startBlock, setStartBlock] = useState(0)
+    const [endBlock, setEndBlock] = useState(0)
+    const [executed, setExecuted] = useState(false)
+    const [cancelled, setCancelled] = useState(false)
+    const [totalVotes, setTotalVotes] = useState(0)
 
-            setProposalCount(parseInt(data))
-            console.log('Found proposal count', proposalCount)
-        }
-    })
+    // // gets the total number of proposals submitted
+    // const getProposalCount = useContractRead({
+    //     addressOrName: GOVERNANCE_ADDRESS,
+    //     contractInterface: GOVERNANCE_ABI,
+    //     functionName: 'proposalCount',
+    //     watch: true,
+    //     onSuccess(data) {
+
+    //         setProposalCount(parseInt(data))
+    //         console.log('Found proposal count', proposalCount)
+    //     }
+    // })
+    
 
 
     // fetches proposals from blockchain
-    var getProposals = useContractRead({
+    const getProposals = useContractRead({
         addressOrName: GOVERNANCE_ADDRESS,
         contractInterface: GOVERNANCE_ABI,
         functionName: 'proposals',
@@ -37,6 +46,16 @@ export default function Proposal() {
         ],
         onSuccess(data) {
             console.log('Success', data)
+            setId(parseInt(data.id._hex))
+            setApproved(parseInt(data.forVotes._hex))
+            setRejected(parseInt(data.againstVotes._hex))
+            setStartBlock(parseInt(data.startBlock._hex))
+            setEndBlock(parseInt(data.endBlock._hex))
+            setExecuted(data.executed)
+            setCancelled(data.cancelled)
+            setAbstained(parseInt(data.abstainVotes._hex))
+            setTotalVotes(parseInt(data.forVotes._hex) + parseInt(data.againstVotes._hex) + parseInt(data.abstainVotes._hex))
+            
 
         }
     })
@@ -60,88 +79,32 @@ export default function Proposal() {
             {console.log(proposals, proposalCount, index)}
             {/* {success ? (<div>hello world</div>) : (console.log(success))} */}
 
-            {/* {proposals.forEach(element => {
-                <div className={styles.proposal}>
-                <p>
-                    ID: {proposal.id}
-                </p>
-                <p>
-                    Approved: {proposal.forVotes}
-                </p>
-                <p>
-                    Rejected: {proposal.againstVotes}
-                </p>
-                <p>
-                    Time left: 99999999
-                </p>
-                <p>
-                    Total votes: 999999999
-                </p>
-            </div>
-            })}; */}
-
-
-
-
-            {/* {getProposals.data.map((proposal) => (
             <div className={styles.proposal}>
                 <p>
-                    ID: {proposal.id}
+                    ID: {id}
                 </p>
                 <p>
-                    Approved: {proposal.forVotes}
+                    Approved: {approved}
                 </p>
                 <p>
-                    Rejected: {proposal.againstVotes}
+                    Rejected: {rejected}
                 </p>
                 <p>
-                    Time left: 99999999
+                    Abstained: {abstained}
                 </p>
                 <p>
-                    Total votes: 999999999
+                    Total Votes: {totalVotes}
+                </p>
+                <p>
+                    StartBlock: {startBlock}
+                </p>
+                <p>
+                    EndBlock: {endBlock}
+                </p>
+                <p>
+                    Status: {executed || cancelled ? ('Closed') : ('Pending')}
                 </p>
             </div>
-        ))} */}
-
-            {/* {proposals.map((proposal) => (proposal.map((p) => (
-                <div className={styles.proposal}>
-                <p>
-                    ID: {p.id}
-                </p>
-                <p>
-                    Approved: {p.forVotes}
-                </p>
-                <p>
-                    Rejected: {p.againstVotes}
-                </p>
-                <p>
-                    Time left: 99999999
-                </p>
-                <p>
-                    Total votes: 999999999
-                </p>
-
-
-            </div>
-            ))))} */}
-
-            {/* <div className={styles.proposal}>
-                <p>
-                    ID: {getProposals.data.id}
-                </p>
-                <p>
-                    Approved: {getProposals.data.forVotes}
-                </p>
-                <p>
-                    Rejected: {getProposals.data.againstVotes}
-                </p>
-                <p>
-                    Time left: 99999999
-                </p>
-                <p>
-                    Total votes: 999999999
-                </p>
-            </div> */}
 
         </>
 
