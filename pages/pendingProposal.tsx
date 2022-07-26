@@ -10,12 +10,13 @@ import { data } from 'autoprefixer';
 import Link from 'next/link'
 
 
-export default function pendingProposal() {
+export default function PendingProposal() {
 
 
     const [proposalCount, setProposalCount] = useState(-99)
 
-    const [array1, setArray1] = useState([])
+    const empty: number[] = []
+    const [array1, setArray1] = useState(empty)
 
     // gets the total number of proposals submitted
     const getProposalCount = useContractRead({
@@ -25,9 +26,9 @@ export default function pendingProposal() {
         watch: true,
         onSuccess(data) {
 
-            setProposalCount(parseInt(data))
+            setProposalCount(parseInt(data.toString()))
             console.log('Found proposal count', proposalCount)
-            setArray(proposalCount)
+            setArray()
         }
     })
 
@@ -35,6 +36,7 @@ export default function pendingProposal() {
     function setArray() {
         for (let i = 1; i <= proposalCount; i++) {
             if (array1.length < proposalCount) {
+                setArray1([...array1, i])
                 array1.push(i)
                 console.log(array1)
             }
@@ -47,15 +49,8 @@ export default function pendingProposal() {
             <h1 className={styles.header}>Pending Proposals</h1>
             <div className={styles.box}>
                 {array1.map((i) => (
-                    <div>
-                        <button>
-                            <Link href={`/proposal/${i}`}>
-                                <>
-                                    Proposal {i}
-                                </>
-                            </Link>
-                        </button>
-
+                    <div key={i}>
+                        <Link href={`/proposal/${i}`}>{`Proposal ${i}`}</Link>                              
                         <Proposal index={i} />
                     </div>
                 ))}
