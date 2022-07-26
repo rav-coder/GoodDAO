@@ -49,7 +49,11 @@ const Proposal = () => {
         return response.json();
       })
       .then((data) => {
-        proposal.current = JSON.parse(data.data.proposal.description);
+        try {
+          proposal.current = JSON.parse(data.data.proposal.description);
+        } catch (e) {
+          console.log(e)
+        }
       });
   });
 

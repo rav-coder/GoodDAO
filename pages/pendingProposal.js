@@ -7,6 +7,7 @@ import { useState } from 'react';
 
 import React from 'react';
 import { data } from 'autoprefixer';
+import Link from 'next/link'
 
 
 export default function pendingProposal() {
@@ -47,6 +48,14 @@ export default function pendingProposal() {
             <div className={styles.box}>
                 {array1.map((i) => (
                     <div>
+                        <button>
+                            <Link href={`/proposal/${i}`}>
+                                <>
+                                    Proposal {i}
+                                </>
+                            </Link>
+                        </button>
+
                         <Proposal index={i} />
                     </div>
                 ))}

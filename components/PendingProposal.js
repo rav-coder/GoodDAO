@@ -3,8 +3,11 @@ import pendingProposals from '../data/pendingProposals.json'
 import { GOVERNANCE_ABI, GOVERNANCE_ADDRESS } from '../utils/constants'
 import { useContractRead, useContractReads } from 'wagmi'
 import { useState } from 'react';
+import Link from 'next/link';
 
-export default function Proposal({index}) {
+export default function Proposal({ index }) {
+
+
 
 
     const [proposalCount, setProposalCount] = useState(-999)
@@ -19,6 +22,7 @@ export default function Proposal({index}) {
     const [executed, setExecuted] = useState(false)
     const [cancelled, setCancelled] = useState(false)
     const [totalVotes, setTotalVotes] = useState(0)
+    // const [url, setUrl] = useState('proposal/')
 
     // // gets the total number of proposals submitted
     // const getProposalCount = useContractRead({
@@ -32,7 +36,7 @@ export default function Proposal({index}) {
     //         console.log('Found proposal count', proposalCount)
     //     }
     // })
-    
+
 
 
     // fetches proposals from blockchain
@@ -55,7 +59,7 @@ export default function Proposal({index}) {
             setCancelled(data.cancelled)
             setAbstained(parseInt(data.abstainVotes._hex))
             setTotalVotes(parseInt(data.forVotes._hex) + parseInt(data.againstVotes._hex) + parseInt(data.abstainVotes._hex))
-            
+
 
         }
     })
@@ -77,34 +81,50 @@ export default function Proposal({index}) {
     return (
         <>
             {console.log(proposals, proposalCount, index)}
-            {/* {success ? (<div>hello world</div>) : (console.log(success))} */}
+            {executed || cancelled ? (
+                <div className={styles.proposal}>
+                    <p>
+                        ID: {id}
+                    </p>
+                    <p>
+                        This proposal has been closed. Please visit the closed proposals page to see more.
+                    </p>
+                </div>
 
-            <div className={styles.proposal}>
-                <p>
-                    ID: {id}
-                </p>
-                <p>
-                    Approved: {approved}
-                </p>
-                <p>
-                    Rejected: {rejected}
-                </p>
-                <p>
-                    Abstained: {abstained}
-                </p>
-                <p>
-                    Total Votes: {totalVotes}
-                </p>
-                <p>
-                    StartBlock: {startBlock}
-                </p>
-                <p>
-                    EndBlock: {endBlock}
-                </p>
-                <p>
-                    Status: {executed || cancelled ? ('Closed') : ('Pending')}
-                </p>
-            </div>
+            ) : (
+                <>
+                    
+                    <div className={styles.proposal}>
+                        <p>
+                            ID: {id}
+                        </p>
+                        <p>
+                            Approved: {approved}
+                        </p>
+                        <p>
+                            Rejected: {rejected}
+                        </p>
+                        <p>
+                            Abstained: {abstained}
+                        </p>
+                        <p>
+                            Total Votes: {totalVotes}
+                        </p>
+                        <p>
+                            StartBlock: {startBlock}
+                        </p>
+                        <p>
+                            EndBlock: {endBlock}
+                        </p>
+                        <p>
+                            Status: {executed || cancelled ? ('Closed') : ('Pending')}
+                        </p>
+                    </div>
+                    <br />
+                </>
+            )}
+
+
 
         </>
 
