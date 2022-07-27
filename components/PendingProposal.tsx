@@ -79,7 +79,7 @@ export default function Proposal({ index }: Props) {
     },
   });
 
-  if (!(status == "Active" || status == "Pending" || status != "")) return <></>;
+  if (!(status == "Active" || status == "Pending")) return <></>;
   else {
     return (
       <>
