@@ -58,7 +58,7 @@ export default function Proposal({ index }: Props) {
     },
   });
   // fetches proposals from blockchain
-  useContractRead({
+  const fetchProposals = useContractRead({
     addressOrName: GOVERNANCE_ADDRESS,
     contractInterface: GOVERNANCE_ABI,
     functionName: "proposals",
@@ -83,6 +83,7 @@ export default function Proposal({ index }: Props) {
   else {
     return (
       <>
+        {console.log(id, fetchProposals.data, approved)}
         <Link href={`/proposal/${index}`}>{`Proposal ${index}`}</Link>
         <div className={styles.proposal}>
           <p>ID: {id}</p>

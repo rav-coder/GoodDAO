@@ -16,7 +16,7 @@ export default function PendingProposal() {
     const [proposalCount, setProposalCount] = useState(-99)
 
     const empty: number[] = []
-    const [array1, setArray1] = useState(empty)
+    const [array1, setArray1] = useState([])
 
     // gets the total number of proposals submitted
     const getProposalCount = useContractRead({
@@ -34,17 +34,14 @@ export default function PendingProposal() {
 
 
     function setArray() {
-        let array = []
+        //let array = []
         for (let i = 1; i <= proposalCount; i++) {
             if (array1.length < proposalCount) {
-                array.push(i)
+                 array1.push(i)
+                //setArray1([...array, i])
             }
         }
-<<<<<<< HEAD
-        //setArray1(array1.reverse())
-=======
-        setArray1(array.reverse())
->>>>>>> b491c0e2dc429a9394ce120bc401075cf73a094f
+       // setArray1(array1.reverse())
     }
 
     return (
