@@ -33,14 +33,13 @@ export default function ClosedProposal() {
 
 
     function setArray() {
-        for (let i = 1; i <= proposalCount; i++) {
+        let array = []
+        for (let i = 1; i <= proposalCount; i++) { 
             if (array1.length < proposalCount) {
-                setArray1([...array1, i])
-                array1.push(i)
-                console.log(array1)
+                array.push(i)
             }
         }
-        setArray1(array1.reverse())
+        setArray1(array.reverse())
     }
 
     return (

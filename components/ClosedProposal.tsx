@@ -5,13 +5,10 @@ import { useState } from "react";
 import Link from "next/link";
 
 type Props = {
-  index: number
-}
+  index: number;
+};
 
 export default function Proposal({ index }: Props) {
-  const [proposalCount, setProposalCount] = useState(-999);
-  const [proposals, setProposals] = useState([]);
-
   const [id, setId] = useState(0);
   const [approved, setApproved] = useState(0);
   const [rejected, setRejected] = useState(0);
@@ -21,7 +18,7 @@ export default function Proposal({ index }: Props) {
   const [executed, setExecuted] = useState(false);
   const [cancelled, setCancelled] = useState(false);
   const [totalVotes, setTotalVotes] = useState(0);
-  const [status, setStatus] = useState('')
+  const [status, setStatus] = useState("");
 
   // fetches proposals from blockchain
   useContractRead({
@@ -51,58 +48,57 @@ export default function Proposal({ index }: Props) {
   useContractRead({
     addressOrName: GOVERNANCE_ADDRESS,
     contractInterface: GOVERNANCE_ABI,
-    functionName: 'state',
+    functionName: "state",
     chainId: 80001,
     watch: true,
-    args: [
-        index
-    ],
+    args: [index],
     onSuccess(data) {
-        let state = parseInt(data.toString())
-        switch (state) {
-            case 0:
-                setStatus('Pending')
-                break;
-            case 1:
-                setStatus('Active')
-                break;
-            case 2:
-                setStatus('Canceled')
-                break;
-            case 3:
-                setStatus('Defeated')
-                break;
-            case 4:
-                setStatus('Succeeded')
-                break;
-            case 5:
-                setStatus('Queued')
-                break;
-            case 6:
-                setStatus('Expired')
-                break;
-            case 7:
-                setStatus('Executed')
-                break;
-            
-        }
-    }
-})
-  if (!(status == 'Active' || status == 'Pending')) {
+      let state = parseInt(data.toString());
+      switch (state) {
+        case 0:
+          setStatus("Pending");
+          break;
+        case 1:
+          setStatus("Active");
+          break;
+        case 2:
+          setStatus("Canceled");
+          break;
+        case 3:
+          setStatus("Defeated");
+          break;
+        case 4:
+          setStatus("Succeeded");
+          break;
+        case 5:
+          setStatus("Queued");
+          break;
+        case 6:
+          setStatus("Expired");
+          break;
+        case 7:
+          setStatus("Executed");
+          break;
+      }
+    },
+  });
+
+  if (status == "Active" || status == "Pending" || status == "") return <></>;
+  else {
     return (
       <>
-        {console.log(proposals, proposalCount, index)}
-        {/* {success ? (<div>hello world</div>) : (console.log(success))} */}
-        <Link href={`/proposal/${index}`}>{`Proposal ${index}`}</Link> 
+        <Link href={`/proposal/${index}`}>{`Proposal ${index}`}</Link>
         <div className={styles.proposal}>
           <p>ID: {id}</p>
 
           <div className="grid grid-cols-2 grid-rows-2 text-xl">
-            <p className="text-left">Approved {Math.round(approved/totalVotes*100 * 100)/100}%</p>
             <p className="text-left">
-              Result: {status}
+              Approved {Math.round((approved / totalVotes) * 100 * 100) / 100}%
             </p>
-            <p className="text-left">Rejected {Math.round(rejected/totalVotes*100 * 100)/100}%</p>
+            <p className="text-left">Result: {status}</p>
+            <p className="text-left">
+              Rejected {Math.round((rejected / totalVotes) * 100 * 100) / 100}%
+            </p>
             <p className="text-left">Ended: N/A</p>
           </div>
 
@@ -117,9 +113,6 @@ export default function Proposal({ index }: Props) {
           <p>End block: {endBlock}</p>
         </div>
       </>
-    )
-  } else {
-    return (<></>)
+    );
   }
-  
 }
