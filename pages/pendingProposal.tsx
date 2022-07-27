@@ -41,7 +41,7 @@ export default function PendingProposal() {
                 console.log(array1)
             }
         }
-        setArray1(array1.reverse())
+        //setArray1(array1.reverse())
     }
 
     return (
