@@ -43,7 +43,7 @@ export default function Proposal({index}: Props) {
         addressOrName: GOVERNANCE_ADDRESS,
         contractInterface: GOVERNANCE_ABI,
         functionName: 'proposals',
-        watch: true,
+        watch: false,
         args: [
             index
         ],
