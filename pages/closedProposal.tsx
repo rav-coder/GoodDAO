@@ -11,43 +11,47 @@ import { data } from 'autoprefixer';
 
 export default function ClosedProposal() {
 
+
     const [proposalCount, setProposalCount] = useState(-99)
 
-    const [array1, setArray1] = useState([])
+    const empty: number[] = []
+    const [array1, setArray1] = useState(empty)
 
-    
     // gets the total number of proposals submitted
-    useContractRead({
-        addressOrName: '0x7cF5441501D186AF1D2ba31fD46608B09D430E08',
+    const getProposalCount = useContractRead({
+        addressOrName: GOVERNANCE_ADDRESS,
         contractInterface: GOVERNANCE_ABI,
         functionName: 'proposalCount',
         watch: true,
         onSuccess(data) {
-            setProposalCount(parseInt(data))
+
+            setProposalCount(parseInt(data.toString()))
             console.log('Found proposal count', proposalCount)
             setArray()
         }
     })
 
-    function setArray() {
-        for (let i = array1.length+1; i <= proposalCount; i++) {
-                array1.push(i)
-                console.log("setArray is ")
-                console.log(array1)
-        }
-    }
 
+    function setArray() {
+        for (let i = 1; i <= proposalCount; i++) {
+            if (array1.length < proposalCount) {
+                setArray1([...array1, i])
+                array1.push(i)
+                console.log(array1)
+            }
+        }
+        setArray1(array1.reverse())
+    }
 
     return (
         <>
             <h1 className={styles.header}>Closed Proposals</h1>
             <div className={styles.box}>
                 {array1.map((i) => (
-                    <div key={i}>
+                    <div key={i}>                           
                         <Proposal index={i} />
                     </div>
-                ))
-                }
+                ))}
             </div>
         </>
     )
