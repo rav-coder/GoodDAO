@@ -3,6 +3,7 @@ import { GOVERNANCE_ABI, GOVERNANCE_ADDRESS } from "../utils/constants";
 import { useContractRead, useContractReads } from "wagmi";
 import { useState } from "react";
 import Link from "next/link";
+import { formatUnits } from "ethers/lib/utils";
 
 type Props = {
   index: number;
@@ -10,14 +11,14 @@ type Props = {
 
 export default function Proposal({ index }: Props) {
   const [id, setId] = useState(0);
-  const [approved, setApproved] = useState(0);
-  const [rejected, setRejected] = useState(0);
-  const [abstained, setAbstained] = useState(0);
+  const [approved, setApproved] = useState('');
+  const [rejected, setRejected] = useState('');
+  const [abstained, setAbstained] = useState('');
   const [startBlock, setStartBlock] = useState(0);
   const [endBlock, setEndBlock] = useState(0);
   const [executed, setExecuted] = useState(false);
   const [cancelled, setCancelled] = useState(false);
-  const [totalVotes, setTotalVotes] = useState(0);
+  const [totalVotes, setTotalVotes] = useState('');
   const [status, setStatus] = useState("");
 
   // fetches proposals from blockchain
@@ -29,14 +30,10 @@ export default function Proposal({ index }: Props) {
     args: [index],
     onSuccess(data) {
       setId(parseInt(data.id._hex));
-      setApproved(parseInt(data.forVotes._hex));
-      setRejected(parseInt(data.againstVotes._hex));
-      setAbstained(parseInt(data.abstainVotes._hex));
-      setTotalVotes(
-        parseInt(data.forVotes._hex) +
-          parseInt(data.againstVotes._hex) +
-          parseInt(data.abstainVotes._hex)
-      );
+      setApproved(formatUnits(data.forVotes.toString(), 18));
+      setRejected(formatUnits(data.againstVotes.toString(), 18));
+      setAbstained(formatUnits(data.abstainVotes.toString(), 18));
+      setTotalVotes(formatUnits(data.forVotes.add(data.againstVotes.add((data.abstainVotes)), 18)));
       setStartBlock(parseInt(data.startBlock._hex));
       setEndBlock(parseInt(data.endBlock._hex));
       setExecuted(data.executed);
@@ -92,11 +89,11 @@ export default function Proposal({ index }: Props) {
 
           <div className="grid grid-cols-2 grid-rows-2 text-xl">
             <p className="text-left">
-              Approved {Math.round((approved / totalVotes) * 100 * 100) / 100}%
+              Approved {Math.round((parseInt(approved) / parseInt(totalVotes)) * 100 * 100) / 100}%
             </p>
             <p className="text-left">Result: {status}</p>
             <p className="text-left">
-              Rejected {Math.round((rejected / totalVotes) * 100 * 100) / 100}%
+              Rejected {Math.round((parseInt(rejected) / parseInt(totalVotes)) * 100 * 100) / 100}%
             </p>
             <p className="text-left">Ended: N/A</p>
           </div>

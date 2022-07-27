@@ -1,10 +1,11 @@
 import React, { useEffect, useRef } from "react";
-import { useContractRead } from "wagmi";
+import { useAccount, useContractRead } from "wagmi";
 import { GOVERNANCE_ABI, GOVERNANCE_ADDRESS } from "../../utils/constants";
 
 import { useRouter } from "next/router";
 
 import Vote from '../../components/Vote'
+import ProposalButtons from "../../components/ProposalButtons";
 
 const Proposal = () => {
   const router = useRouter();
@@ -23,7 +24,9 @@ const Proposal = () => {
     "Social Docs": "",
   });
 
-  const { data } = useContractRead({
+  const {address} = useAccount()
+
+  const { data: proposalData } = useContractRead({
     addressOrName: GOVERNANCE_ADDRESS,
     contractInterface: GOVERNANCE_ABI,
     functionName: "proposals",
@@ -125,10 +128,7 @@ const Proposal = () => {
           <span className="font-bold text-xl">Project Ethereum Wallet</span>
           <p>{proposal.current["Project Ethereum Wallet"]}</p>
         </div>
-        {state?.toString() == '1' ? <div className="w-full flex flex-1 justify-evenly">
-          <Vote id={proposalId} vote={1}/>
-          <Vote id={proposalId} vote={0}/>
-        </div> : null}
+        <ProposalButtons id={proposalId} state={state?.toString()} isOwner={proposalData?.proposer == address}/>
       </div>
     </div>
   );
