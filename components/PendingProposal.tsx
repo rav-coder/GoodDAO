@@ -47,7 +47,7 @@ export default function Proposal({index}: Props) {
         addressOrName: GOVERNANCE_ADDRESS,
         contractInterface: GOVERNANCE_ABI,
         functionName: 'proposals',
-        watch: false,
+        watch: true,
         args: [
             index
         ],
@@ -118,6 +118,7 @@ export default function Proposal({index}: Props) {
 
     return (
         <>
+            {console.log(index, getProposals.data)}
             <div className={styles.proposal}>
                 <p>
                     ID: {id}
