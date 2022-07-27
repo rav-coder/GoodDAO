@@ -40,7 +40,11 @@ export default function PendingProposal() {
                 array.push(i)
             }
         }
+<<<<<<< HEAD
         //setArray1(array1.reverse())
+=======
+        setArray1(array.reverse())
+>>>>>>> b491c0e2dc429a9394ce120bc401075cf73a094f
     }
 
     return (
