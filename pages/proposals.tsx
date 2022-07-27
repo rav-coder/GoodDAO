@@ -21,10 +21,6 @@ export default function Proposals() {
             <div className={styles.proposals}>
                 <Link href='/delegateVote'>Delegate Votes</Link>
             </div>
-
-
-
-
         </div>
     )
 }
