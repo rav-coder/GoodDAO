@@ -12,15 +12,8 @@ import { data } from 'autoprefixer';
 export default function PendingProposal() {
 
 
-<<<<<<< HEAD
-    const [proposalCount, setProposalCount] = useState(-99)
-
-    const empty: number[] = []
-    const [array1, setArray1] = useState([])
-=======
     const [proposalCount, setProposalCount] = useState(0)
     const [array1, setArray1] = useState<number[]>([])
->>>>>>> bb153fa0c0fa5762d3a31530514699dfe421c6d1
 
     // gets the total number of proposals submitted
     const getProposalCount = useContractRead({
@@ -36,22 +29,11 @@ export default function PendingProposal() {
     })
 
     function setArray() {
-<<<<<<< HEAD
-        //let array = []
-        for (let i = 1; i <= proposalCount; i++) {
-            if (array1.length < proposalCount) {
-                 array1.push(i)
-                //setArray1([...array, i])
-            }
-        }
-       // setArray1(array1.reverse())
-=======
         let array = [];
         for (let i = 1; i <= proposalCount; i++) {
             array.unshift(i);
         }
         setArray1(array);
->>>>>>> bb153fa0c0fa5762d3a31530514699dfe421c6d1
     }
 
     return (
