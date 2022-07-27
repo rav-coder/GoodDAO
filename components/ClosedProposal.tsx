@@ -28,7 +28,6 @@ export default function Proposal({ index }: Props) {
     watch: false,
     args: [index],
     onSuccess(data) {
-      console.log("Success", data);
       setId(parseInt(data.id._hex));
       setApproved(parseInt(data.forVotes._hex));
       setRejected(parseInt(data.againstVotes._hex));

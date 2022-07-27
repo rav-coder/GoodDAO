@@ -3,20 +3,17 @@ import Proposal from '../components/PendingProposal'
 
 import { GOVERNANCE_ABI, GOVERNANCE_ADDRESS } from '../utils/constants'
 import { useContractRead, useContractReads } from 'wagmi'
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import React from 'react';
 import { data } from 'autoprefixer';
-import Link from 'next/link'
 
 
 export default function PendingProposal() {
 
 
-    const [proposalCount, setProposalCount] = useState(-99)
-
-    const empty: number[] = []
-    const [array1, setArray1] = useState(empty)
+    const [proposalCount, setProposalCount] = useState(0)
+    const [array1, setArray1] = useState<number[]>([])
 
     // gets the total number of proposals submitted
     const getProposalCount = useContractRead({
@@ -25,22 +22,18 @@ export default function PendingProposal() {
         functionName: 'proposalCount',
         watch: true,
         onSuccess(data) {
-
             setProposalCount(parseInt(data.toString()))
             console.log('Found proposal count', proposalCount)
             setArray()
         }
     })
 
-
     function setArray() {
-        let array = []
+        let array = [];
         for (let i = 1; i <= proposalCount; i++) {
-            if (array1.length < proposalCount) {
-                array.push(i)
-            }
+            array.unshift(i);
         }
-        setArray1(array.reverse())
+        setArray1(array);
     }
 
     return (
