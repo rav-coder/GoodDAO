@@ -3,7 +3,13 @@ import { useContractRead, useContractReads, useContractWrite } from 'wagmi'
 import { useState } from 'react';
 import {toast} from 'react-toastify'
 
-export default function Approve({ id, vote }) {
+type Props = {
+	id?: string | string[]
+	vote: number
+}
+
+
+export default function Vote({ id, vote }: Props) {
 
 	const castVote = useContractWrite({
 		addressOrName: GOVERNANCE_ADDRESS,
@@ -17,14 +23,18 @@ export default function Approve({ id, vote }) {
 		onSuccess() {
 			toast.success(vote == 0 ? 'Vote casted: Reject' : 'Vote casted: Approve')
 		},
-		onError(error) {
-			toast.error(error.message)
+		onError(error: any) {
+			if (error.error != null) {
+				toast.error(error.error.data.message)
+			} else {
+				toast.error(error.message)
+			}
+			
 		},
 	})
 
 	return (
 		<>
-			{console.log(id,vote)}
 			<button onClick={() => { castVote.write() }}>
 				{vote == 0 ? (<>Reject</>) : (<>Approve</>)}
 			</button>

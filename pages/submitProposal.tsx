@@ -89,32 +89,32 @@ export default function SubmitProposals() {
       toast.success('Proposal Submitted!')
       //console.log(data);
     },
-    onError(error) {
+    onError(error: any) {
 
       toast.error(error.message)
 
-      // if(error.error != null){
+      if(error.error != null){
 
-      //   toast.error(error.error.data.message);
+        toast.error(error.error.data.message);
       
-      //   // console.log(error.error.data.code);
+        // console.log(error.error.data.code);
 
-      //   // if(error.error.code = '-32603'){
-      //   //   if(error.error.data.code = '3'){
-      //   //     toast.error("Only guardians can submit a proposal.");
-      //   //   }
-      //   //   else{
-      //   //     toast.error("One live proposal already exists for guardian.");
-      //   //   }
+        // if(error.error.code = '-32603'){
+        //   if(error.error.data.code = '3'){
+        //     toast.error("Only guardians can submit a proposal.");
+        //   }
+        //   else{
+        //     toast.error("One live proposal already exists for guardian.");
+        //   }
 
-      //   // }
-      //   // else{
-      //   // }
+        // }
+        // else{
+        // }
 
-      // }
-      // else{
-      //   toast.error(error.message)
-      // }
+      }
+      else{
+        toast.error(error.message)
+      }
 
     }
   })

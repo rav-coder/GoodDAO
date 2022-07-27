@@ -30,6 +30,13 @@ const Proposal = () => {
     args: [proposalId],
   });
 
+  const {data: state} = useContractRead({
+    addressOrName: GOVERNANCE_ADDRESS,
+    contractInterface: GOVERNANCE_ABI,
+    functionName: 'state',
+    args: [proposalId],
+  })
+
   var query = `query {
     proposal (id: ${proposalId}) {
       description
@@ -118,10 +125,10 @@ const Proposal = () => {
           <span className="font-bold text-xl">Project Ethereum Wallet</span>
           <p>{proposal.current["Project Ethereum Wallet"]}</p>
         </div>
-        <div className="w-full flex flex-1 justify-evenly">
+        {state?.toString() == '1' ? <div className="w-full flex flex-1 justify-evenly">
           <Vote id={proposalId} vote={1}/>
           <Vote id={proposalId} vote={0}/>
-        </div>
+        </div> : null}
       </div>
     </div>
   );
