@@ -114,7 +114,6 @@ export default function Proposal({index}: Props) {
     if (status == 'Active' || status == 'Pending') {
        return (
         <>
-            {console.log(index, getProposals.data)}
             <Link href={`/proposal/${index}`}>{`Proposal ${index}`}</Link> 
             <div className={styles.proposal}>
                 <p>
