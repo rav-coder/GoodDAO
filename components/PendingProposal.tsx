@@ -11,10 +11,6 @@ type Props = {
 }
 
 export default function Proposal({index}: Props) {
-
-
-
-
     const [proposalCount, setProposalCount] = useState(-999)
     const [proposals, setProposals] = useState([])
 
@@ -115,9 +111,10 @@ export default function Proposal({index}: Props) {
 
     // // takes all the proposals and puts them into an array
     // const compileProposals = compile()
-
-    return (
+    if (status == 'Active' || status == 'Pending') {
+       return (
         <>
+            <Link href={`/proposal/${index}`}>{`Proposal ${index}`}</Link> 
             <div className={styles.proposal}>
                 <p>
                     ID: {id}
@@ -146,7 +143,11 @@ export default function Proposal({index}: Props) {
             </div>
             <br />
         </>
-    )
+    ) 
+    } else {
+        return (<></>)
+    }
+    
 
     // return (
     //     <>

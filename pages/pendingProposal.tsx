@@ -3,7 +3,7 @@ import Proposal from '../components/PendingProposal'
 
 import { GOVERNANCE_ABI, GOVERNANCE_ADDRESS } from '../utils/constants'
 import { useContractRead, useContractReads } from 'wagmi'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import React from 'react';
 import { data } from 'autoprefixer';
@@ -41,16 +41,15 @@ export default function PendingProposal() {
                 console.log(array1)
             }
         }
+        setArray1(array1.reverse())
     }
-
 
     return (
         <>
             <h1 className={styles.header}>Pending Proposals</h1>
             <div className={styles.box}>
                 {array1.map((i) => (
-                    <div key={i}>
-                        <Link href={`/proposal/${i}`}>{`Proposal ${i}`}</Link>                              
+                    <div key={i}>                           
                         <Proposal index={i} />
                     </div>
                 ))}
