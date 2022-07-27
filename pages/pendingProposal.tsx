@@ -33,7 +33,7 @@ export default function PendingProposal() {
         for (let i = 1; i <= proposalCount; i++) {
             array.unshift(i);
         }
-        setArray1(array.reverse())
+        setArray1(array);
     }
 
     return (
