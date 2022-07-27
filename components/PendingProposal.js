@@ -38,7 +38,6 @@ export default function Proposal({ index }) {
     // })
 
 
-
     // fetches proposals from blockchain
     const getProposals = useContractRead({
         addressOrName: GOVERNANCE_ADDRESS,
@@ -59,7 +58,6 @@ export default function Proposal({ index }) {
             setCancelled(data.cancelled)
             setAbstained(parseInt(data.abstainVotes._hex))
             setTotalVotes(parseInt(data.forVotes._hex) + parseInt(data.againstVotes._hex) + parseInt(data.abstainVotes._hex))
-
 
         }
     })
