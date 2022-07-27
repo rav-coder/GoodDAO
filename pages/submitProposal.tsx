@@ -199,8 +199,7 @@ export default function SubmitProposals() {
           <br />
           <br />
 
-          {/* <button type="Submit" onClick={ (event) => { event.preventDefault(); propose.write(); } } className={styles.submit}> */}
-          <button type="submit" onClick={ (event) => { if(!document.getElementById('myForm')?.checkValidity()! ) { } 
+          <button type="submit" onClick={ (event) => { if(!(document.getElementById('myForm') as HTMLFormElement).checkValidity()! ) { } 
           else{ event.preventDefault(); propose.write(); } } } className={styles.submit}>
           Submit
           </button>
