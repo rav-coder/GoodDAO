@@ -4,6 +4,8 @@ import { GOVERNANCE_ABI, GOVERNANCE_ADDRESS } from "../../utils/constants";
 
 import { useRouter } from "next/router";
 
+import Vote from '../../components/Vote'
+
 const Proposal = () => {
   const router = useRouter();
   const proposalId = router.query.id;
@@ -117,8 +119,8 @@ const Proposal = () => {
           <p>{proposal.current["Project Ethereum Wallet"]}</p>
         </div>
         <div className="w-full flex flex-1 justify-evenly">
-          <button>Approve</button>
-          <button>Reject</button>
+          <Vote id={proposalId} vote={1}/>
+          <Vote id={proposalId} vote={0}/>
         </div>
       </div>
     </div>
