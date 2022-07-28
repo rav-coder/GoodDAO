@@ -22,7 +22,7 @@ const Footer = () => {
 
 	return (
 
-		<div className='fixed bottom-0 justify-center w-screen'>
+		<div className='fixed bottom-0 justify-center w-screen z-10'>
 			<div className="flex justify-between mx-auto pb-5 w-1/6 border-red-500 border-0">
 				<a href='https://twitter.com/BCharityFi' rel='noreferrer' target='_blank'>
 					<div className='flex justify-center align-middle items-center self-center bg-white w-10 h-10 rounded-full'>
@@ -72,7 +72,8 @@ const Footer = () => {
 				{router.asPath == '/' ? <div></div> :
 					<div className='absolute ml-14 left-0'>
 						<div className='flex justify-center border-black border-2 px-2 rounded-md'>
-							<Link href={'/'}>Back</Link>
+							{/* <Link href={'/'}>Back</Link> */}
+							<button onClick={() => router.back()}>Back</button>
 						</div>
 					</div>
 				}
