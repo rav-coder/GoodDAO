@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useAccount, useConnect, useDisconnect } from 'wagmi'
 import truncateWalletAddress from '../utils/truncateWalletAddress'
+import Meta from '../public/metamask.png'
+import Image from 'next/image';
 
 const Connect = () => {
 
@@ -16,8 +18,11 @@ const Connect = () => {
 			setBtnTxt(
 			<div>
 				{connectors.map((connector) => (
-					<button disabled={!connector?.ready} key={connector.id} onClick={() => connect({ connector })}>
-					{'Connect with Metamask'}
+					<button disabled={!connector?.ready} key={connector.id} onClick={() => connect({ connector })} 
+					className="bg-brand-500 hover:bg-brand-600 border border-brand-600 text-white focus:ring-brand-400 px-3 py-1 
+					flex items-center space-x-1.5 rounded-lg font-bold disabled:opacity-50 shadow-sm focus:ring-2 focus:ring-opacity-50 focus:ring-offset-1 outline-none">
+						<Image layout='intrinsic' className="!mr-1 w-4 h-4" width='20' height='20' src={Meta} alt="MetaMask Logo"/>	
+					{'Connect'}
 					{!connector?.ready && ' (unsupported)'}
 					{isLoading && connector?.id === pendingConnector?.id && ' (connecting)'}
 					</button>
