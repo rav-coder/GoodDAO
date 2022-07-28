@@ -7,16 +7,13 @@ import { useState } from 'react';
 
 import React from 'react';
 import { data } from 'autoprefixer';
-import Link from 'next/link'
 
 
 export default function PendingProposal() {
 
 
-    const [proposalCount, setProposalCount] = useState(-99)
-
-    const empty: number[] = []
-    const [array1, setArray1] = useState(empty)
+    const [proposalCount, setProposalCount] = useState(0)
+    const [array1, setArray1] = useState<number[]>([])
 
     // gets the total number of proposals submitted
     const getProposalCount = useContractRead({
@@ -25,32 +22,26 @@ export default function PendingProposal() {
         functionName: 'proposalCount',
         watch: true,
         onSuccess(data) {
-
             setProposalCount(parseInt(data.toString()))
             console.log('Found proposal count', proposalCount)
             setArray()
         }
     })
 
-
     function setArray() {
+        let array = [];
         for (let i = 1; i <= proposalCount; i++) {
-            if (array1.length < proposalCount) {
-                setArray1([...array1, i])
-                array1.push(i)
-                console.log(array1)
-            }
+            array.unshift(i);
         }
+        setArray1(array);
     }
-
 
     return (
         <>
             <h1 className={styles.header}>Pending Proposals</h1>
             <div className={styles.box}>
                 {array1.map((i) => (
-                    <div key={i}>
-                        <Link href={`/proposal/${i}`}>{`Proposal ${i}`}</Link>                              
+                    <div key={i}>                           
                         <Proposal index={i} />
                     </div>
                 ))}

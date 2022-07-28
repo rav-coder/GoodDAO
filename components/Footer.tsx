@@ -41,13 +41,13 @@ const Footer = () => {
 						<FontAwesomeIcon icon={faInstagram} />
 					</div>
 				</a>
-				<a href='https://github.com/ClearlyRubix/GoodDAO' rel='noreferrer' target='_blank'>
+				<a href='https://github.com/BCharity-Net/web3gooddao/' rel='noreferrer' target='_blank'>
 					<div className='flex justify-center align-middle items-center self-center bg-white w-10 h-10 rounded-full'>
 						<FontAwesomeIcon icon={faGithub} />
 					</div>
 				</a>
 
-				<a href='https://clearlyrubix.gitbook.io/gooddao/' rel='noreferrer' target='_blank'>
+				<a href='https://gooddao-1.gitbook.io/gooddao/' rel='noreferrer' target='_blank'>
 					<div className='flex justify-center align-middle items-center self-center bg-white w-10 h-10 rounded-full'>
 						<FontAwesomeIcon icon={faBook} />
 					</div>

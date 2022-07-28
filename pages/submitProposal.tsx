@@ -11,7 +11,7 @@ import { useContractReads, useContractWrite } from 'wagmi'
 import { IGIVE_ABI, IGIVE_TOKEN, GOOD_ABI, GOOD_TOKEN, GOVERNANCE_ABI, GOVERNANCE_ADDRESS, RPC_URL } from '../utils/constants'
 import Web3 from 'web3'
 
-function encodeParameters(types, values) {
+function encodeParameters(types: string[], values:string[]) {
   let web3 = new Web3(RPC_URL);
   const abi = new ethers.utils.AbiCoder();
 
@@ -42,20 +42,33 @@ export default function SubmitProposals() {
   const [rewardDistributionT, setRewardDistributionT] = useState('Day')
   const [projectWallet, setProjectWallet] = useState('')
 
-  var obj = new Object();
-   obj["Proposal"] = proposal;
-   obj["Guardian Name"]  = guardianName;
-   obj["Guardian Social Handle"] = guardianSocialHandle;
-   obj["Guardian Wallet"] = address;
-   obj["Project Summary"]  = description;
-   obj["Lite/Whitepaper"] = whitepaper;
-   obj["Social Docs"] = socialDocs;
-   obj.Audits  = audits;
-   obj["Cult Reward Allocation"] = rewardAllocation;
-  //  obj["Reward Distribution Percent"] = rewardDistributionP;
-  //  obj["Reward Distribution TimeFrame"] = rewardDistributionT;
-   obj["Reward Distribution Terms"] = rewardDistributionP + "% per " + rewardDistributionT;
-   obj["Project Ethereum Wallet"] = projectWallet;
+  var obj = {
+    Proposal: proposal,
+    "Guardian Name": guardianName,
+    "Guardian Social Handle": guardianSocialHandle,
+    "Guardian Wallet": address,
+    "Project Summary": description,
+    "Lite/Whitepaper": whitepaper,
+    "Social Docs": socialDocs,
+    Audits: audits,
+    "Good Reward Allocation": rewardAllocation,
+    "Reward Distribution Terms": rewardDistributionP + "% per " + rewardDistributionT,
+    "Project Ethereum Wallet": projectWallet
+
+  }
+  // obj["Proposal"] = proposal;
+  // obj["Guardian Name"]  = guardianName;
+  // obj["Guardian Social Handle"] = guardianSocialHandle;
+  // obj["Guardian Wallet"] = address;
+  // obj["Project Summary"]  = description;
+  // obj["Lite/Whitepaper"] = whitepaper;
+  // obj["Social Docs"] = socialDocs;
+  // obj.Audits  = audits;
+  // obj["Good Reward Allocation"] = rewardAllocation;
+  // //  obj["Reward Distribution Percent"] = rewardDistributionP;
+  // //  obj["Reward Distribution TimeFrame"] = rewardDistributionT;
+  // obj["Reward Distribution Terms"] = rewardDistributionP + "% per " + rewardDistributionT;
+  // obj["Project Ethereum Wallet"] = projectWallet;
 
   var jsonString= JSON.stringify(obj);
 
@@ -76,7 +89,9 @@ export default function SubmitProposals() {
       toast.success('Proposal Submitted!')
       //console.log(data);
     },
-    onError(error) {
+    onError(error: any) {
+
+      toast.error(error.message)
 
       if(error.error != null){
 
@@ -130,7 +145,7 @@ export default function SubmitProposals() {
           <br />
           <br />
           <h2>Provide a short description of the Project, and why it is suitable for investment from GOOD.</h2>
-          <textarea className={styles.input1} type={'text'} rows={5} value={description} onChange={(e) => { setDescription(e.target.value) }}  required/>
+          <textarea className={styles.input1} rows={5} value={description} onChange={(e) => { setDescription(e.target.value) }}  required/>
 
           <br />
           <br />
@@ -140,7 +155,7 @@ export default function SubmitProposals() {
           <br />
           <br />
           <h2>Provide all social channels associated with the project.</h2>
-          <textarea className={styles.input1} type={'text'} value={socialDocs} onChange={(e) => { setSocialDocs(e.target.value) }}  required/>
+          <textarea className={styles.input1} value={socialDocs} onChange={(e) => { setSocialDocs(e.target.value) }}  required/>
 
           <br />
           <br />
@@ -160,7 +175,7 @@ export default function SubmitProposals() {
           <input className={styles.input2} type={'number'} value={rewardDistributionP} 
           onChange={(e) => { setRewardDistributionP(e.target.value) }} />
           <span> % per </span>
-          <select className={styles.input2} type={'text'} value={rewardDistributionT} onChange={(e) => { setRewardDistributionT(e.target.value) }} required>
+          <select className={styles.input2} value={rewardDistributionT} onChange={(e) => { setRewardDistributionT(e.target.value) }} required>
             <option>Day</option>
             <option>Week</option>
             <option>Month</option>
@@ -184,8 +199,7 @@ export default function SubmitProposals() {
           <br />
           <br />
 
-          {/* <button type="Submit" onClick={ (event) => { event.preventDefault(); propose.write(); } } className={styles.submit}> */}
-          <button type="Submit" onClick={ (event) => { if(!document.getElementById('myForm').checkValidity() ) { } 
+          <button type="submit" onClick={ (event) => { if(!(document.getElementById('myForm') as HTMLFormElement).checkValidity()! ) { } 
           else{ event.preventDefault(); propose.write(); } } } className={styles.submit}>
           Submit
           </button>

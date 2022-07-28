@@ -1,8 +1,11 @@
 import React, { useEffect, useRef } from "react";
-import { useContractRead } from "wagmi";
+import { useAccount, useContractRead } from "wagmi";
 import { GOVERNANCE_ABI, GOVERNANCE_ADDRESS } from "../../utils/constants";
 
 import { useRouter } from "next/router";
+
+import Vote from '../../components/Vote'
+import ProposalButtons from "../../components/ProposalButtons";
 
 const Proposal = () => {
   const router = useRouter();
@@ -21,12 +24,21 @@ const Proposal = () => {
     "Social Docs": "",
   });
 
-  const { data } = useContractRead({
+  const {address} = useAccount()
+
+  const { data: proposalData } = useContractRead({
     addressOrName: GOVERNANCE_ADDRESS,
     contractInterface: GOVERNANCE_ABI,
     functionName: "proposals",
     args: [proposalId],
   });
+
+  const {data: state} = useContractRead({
+    addressOrName: GOVERNANCE_ADDRESS,
+    contractInterface: GOVERNANCE_ABI,
+    functionName: 'state',
+    args: [proposalId],
+  })
 
   var query = `query {
     proposal (id: ${proposalId}) {
@@ -116,10 +128,7 @@ const Proposal = () => {
           <span className="font-bold text-xl">Project Ethereum Wallet</span>
           <p>{proposal.current["Project Ethereum Wallet"]}</p>
         </div>
-        <div className="w-full flex flex-1 justify-evenly">
-          <button>Approve</button>
-          <button>Reject</button>
-        </div>
+        <ProposalButtons id={proposalId} state={state?.toString()} isOwner={proposalData?.proposer == address}/>
       </div>
     </div>
   );

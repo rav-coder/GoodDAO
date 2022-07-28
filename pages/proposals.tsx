@@ -9,18 +9,26 @@ export default function Proposals() {
     return (
         <div className={styles.main}>
 
+            <Link href='/pendingProposal'>
             <div className={styles.proposals}>
-                <Link href='/pendingProposal'>Pending Proposals</Link>
+                Pending Proposals
             </div>
+            </Link>
+            <Link href='/closedProposal'>
             <div className={styles.proposals}>
-                <Link href='/closedProposal'>Closed Proposals</Link>
+                Closed Proposals
             </div>
+            </Link>
+            <Link href='/submitProposal'>
             <div className={styles.proposals}>
-                <Link href='/submitProposal'>Submit Proposals</Link>
+                Submit Proposals
             </div>
+            </Link>
+            <Link href='/delegateVote'>
             <div className={styles.proposals}>
-                <Link href='/delegateVote'>Delegate Votes</Link>
+                Delegate Votes
             </div>
+            </Link>
         </div>
     )
 }
