@@ -111,7 +111,7 @@ export default function Faqs() {
 
                     <div label="How to Stake GOOD?" >
                         <p className="mb-3">
-                        Staking GOOD is a simple process. Navigate to the "Stake" page on the GOOD dapp. From here, enter the amount of GOOD you wish to stake, 
+                        Staking GOOD is a simple process. Navigate to the {`"`}Stake{`"`} page on the GOOD dapp. From here, enter the amount of GOOD you wish to stake, 
                         Approve the transaction, and then complete the Deposit transaction.
                         </p>
                         <p>
@@ -136,7 +136,7 @@ export default function Faqs() {
 
                     <div label="How do rewards work?" >
                         <p className="mb-3">
-                        Many typical staking pools on other apps are paid out on a "per block" basis. This means that the rewards are paid roughly every 15 seconds 
+                        Many typical staking pools on other apps are paid out on a {`"`}per block{`"`} basis. This means that the rewards are paid roughly every 15 seconds 
                         (one block) in a linear fashion.
                         </p>
                         <p className="mb-3">
@@ -212,7 +212,7 @@ export default function Faqs() {
                                 The total supply of the charitable program token
                             </li>
                             <li className="ml-3">
-                                The percentage of the total supply being offered in return for 5 ETH times' grant
+                                The percentage of the total supply being offered in return for 5 ETH times{`'`} grant
                             </li>
                             <li className="ml-3">
                                 The tokenomics
