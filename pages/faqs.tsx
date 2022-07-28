@@ -9,7 +9,7 @@ export default function Faqs() {
                 FAQ & Explanations
                 </div>
                 <Accordion>
-                    <div label="What is a DAO?" >
+                    <div id="What is a DAO?" >
                         <p className="mb-3">
                         A DAO is a Decentralised Autonomous Organization. The definition of which is argued almost as much, and by almost as many, 
                         who squabble between themselves in left wing politics.
@@ -24,7 +24,7 @@ export default function Faqs() {
                         </p>
                     </div>
 
-                    <div label="What is GOOD DAO?" >
+                    <div id="What is GOOD DAO?" >
                         <p>
                         Good DAO seeks to fast forward the collapse of the global economic order and to grant the charitable programs seeking the same goal.
                         </p>
@@ -38,14 +38,14 @@ export default function Faqs() {
 
                 <Accordion>
 
-                    <div label="What is GOOD?" >
+                    <div id="What is GOOD?" >
                         <p>
                         GOOD is the tradable and liquid token of Good DAO grant maker. Transacting GOOD will contribute to the protocol by filling the DAO treasury slowly, 
                         to fund investments into decentralized technologies. This is achieved due to a 0.3% collection on all GOOD transactions that goes straight to the DAO.
                         </p>
                     </div>
 
-                    <div label="Where can I buy GOOD?" >
+                    <div id="Where can I buy GOOD?" >
                         <p>
                         GOOD is available to buy on the Polygon network from Uniswap.org. The contract address is: 0xd21932b453f0dC0918384442D7AaD5B033C4217B
                         </p>
@@ -59,13 +59,13 @@ export default function Faqs() {
 
                 <Accordion>
 
-                    <div label="What is iGIVE?" >
+                    <div id="What is iGIVE?" >
                         <p>
                         iGIVE is just the “proof of stake token” for GOOD. When you stake your GOOD into the DAO, you are given iGIVE, this can be swapped back 
                         at any time into the amount of GOOD you staked originally, plus any fees that were given to the DAO in the time period you owned iGIVE.</p>
                     </div>
 
-                    <div label="How are rewards paid?" >
+                    <div id="How are rewards paid?" >
                         <p className="mb-3">
                         When proposals are approved and an investment is made, the successful project will redistribute the agreed amounts of their token by 
                         selling that allocation into GOOD. They then burn 50% by sending it to a dead wallet, and the other 50% is sent back to the DAO.
@@ -76,7 +76,7 @@ export default function Faqs() {
                         </p>
                     </div>
 
-                    <div label="Can I add iGIVE to my wallet?" >
+                    <div id="Can I add iGIVE to my wallet?" >
                         <p className="mb-3">
                         iGIVE is non-transferrable, and cannot be obtained by any means other than staking GOOD. You can see your balance in your wallet 
                         by adding the iGIVE contract address.
@@ -94,7 +94,7 @@ export default function Faqs() {
 
                 <Accordion>
 
-                    <div label="Why stake GOOD?" >
+                    <div id="Why stake GOOD?" >
                         <p className="mb-3">
                         Staking GOOD is the basis of the whole protocol. The top stakers (holders of iGIVE) are The Guardians, who are able to submit proposals, 
                         either for their own projects, or on behalf of others.
@@ -109,7 +109,7 @@ export default function Faqs() {
                         </p>
                     </div>
 
-                    <div label="How to Stake GOOD?" >
+                    <div id="How to Stake GOOD?" >
                         <p className="mb-3">
                         Staking GOOD is a simple process. Navigate to the {`"`}Stake{`"`} page on the GOOD dapp. From here, enter the amount of GOOD you wish to stake, 
                         Approve the transaction, and then complete the Deposit transaction.
@@ -119,7 +119,7 @@ export default function Faqs() {
                         </p>
                     </div>
                     
-                    <div label="How to Unstake GOOD?" >
+                    <div id="How to Unstake GOOD?" >
                         <p>
                         To unstake your GOOD, click the Withdraw button, and confirm the transaction in your wallet. Your iGIVE will be converted back to GOOD, 
                         alongside any unclaimed rewards.
@@ -134,7 +134,7 @@ export default function Faqs() {
     
                     <Accordion>
 
-                    <div label="How do rewards work?" >
+                    <div id="How do rewards work?" >
                         <p className="mb-3">
                         Many typical staking pools on other apps are paid out on a {`"`}per block{`"`} basis. This means that the rewards are paid roughly every 15 seconds 
                         (one block) in a linear fashion.
@@ -151,7 +151,7 @@ export default function Faqs() {
                         </p>
                     </div>
 
-                    <div label="Sending Rewards" >
+                    <div id="Sending Rewards" >
                         <p className="mb-3">
                         If your project was successfully approved, and you are ready to begin distributing your reward allocation to the DAO, you need to convert your token 
                         into GOOD, and then send it to the below address:
@@ -179,7 +179,7 @@ export default function Faqs() {
     
                     <Accordion>
 
-                    <div label="How do I submit a proposal for funding from the DAO?">
+                    <div id="How do I submit a proposal for funding from the DAO?">
                         <p className="mb-3">
                         To submit proposals to the DAO you must enlist the help of a Guardian, or multiple Guardians. 
                         Only they can put your proposal forward, unless you yourself are one of the top 21 iGIVE holders. 
@@ -205,7 +205,7 @@ export default function Faqs() {
                         </p>
                     </div>
 
-                    <div label="What should be contained in the Proposal?">
+                    <div id="What should be contained in the Proposal?">
                         <p>
                         <ul className='list-disc'>
                             <li className="ml-3">

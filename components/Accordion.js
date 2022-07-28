@@ -18,29 +18,29 @@ class Accordion extends Component {
     
     this.props.children.forEach(child => {
       if (child.props.isOpen) {
-        openSections[child.props.label] = true;
+        openSections[child.props.id] = true;
       }
     });
 
     this.state = { openSections };
   }
 
-  onClick = label => {
+  onClick = id => {
     const { props: { allowMultipleOpen }, state: { openSections } } = this;
 
-    const isOpen = !!openSections[label];
+    const isOpen = !!openSections[id];
 
     if (allowMultipleOpen) {
       this.setState({
         openSections: {
           ...openSections,
-          [label]: !isOpen
+          [id]: !isOpen
         }
       });
     } else {
       this.setState({
         openSections: {
-          [label]: !isOpen
+          [id]: !isOpen
         }
       });
     }
@@ -57,8 +57,8 @@ class Accordion extends Component {
       <div>
         {children.map(child => (
           <AccordionSection
-            isOpen={!!openSections[child.props.label]}
-            label={child.props.label}
+            isOpen={!!openSections[child.props.id]}
+            id={child.props.id}
             onClick={onClick}
             key={child}
           >
@@ -74,16 +74,16 @@ class AccordionSection extends Component {
     static propTypes = {
       children: PropTypes.instanceOf(Object).isRequired,
       isOpen: PropTypes.bool.isRequired,
-      label: PropTypes.string.isRequired,
+      id: PropTypes.string.isRequired,
       onClick: PropTypes.func.isRequired
     };
   
     onClick = () => {
-      this.props.onClick(this.props.label);
+      this.props.onClick(this.props.id);
     };
   
     render() {
-      const { onClick, props: { isOpen, label } } = this;
+      const { onClick, props: { isOpen, id } } = this;
   
       return (
         <div
@@ -95,7 +95,7 @@ class AccordionSection extends Component {
           className="mb-3"
         >
           <div onClick={onClick} style={ { cursor: "pointer" , color: isOpen ? "#fff" : "#000" } } className="font-bold">
-            {label}
+            {id}
             <div style={{ float: "right" }}>
               {!isOpen && <span>&#9650;</span>}
               {isOpen && <span>&#9660;</span>}
