@@ -1,7 +1,7 @@
 import styles from "../styles/ProposalPages.module.css";
 import { GOVERNANCE_ABI, GOVERNANCE_ADDRESS } from "../utils/constants";
-import { useContractRead, useContractReads } from "wagmi";
-import { useState } from "react";
+import { useAccount, useContractRead, useContractReads } from "wagmi";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { formatUnits } from "ethers/lib/utils";
 
@@ -79,14 +79,86 @@ export default function Proposal({ index }: Props) {
     },
   });
 
+  const getVoteString = (vote: number) => {
+    switch (vote) {
+      case 0:
+        return 'Against';
+      case 1:
+        return 'For';
+      case 2:
+        return 'Abstain'
+      default:
+        return 'Abstain'
+    }
+  }
+  
+  const {address} = useAccount()
+
+  const getReceipt = useContractRead({
+    addressOrName: GOVERNANCE_ADDRESS,
+    contractInterface: GOVERNANCE_ABI,
+    functionName: 'getReceipt',
+    watch: false,
+    args: [
+      index,
+      address
+    ],
+    onSuccess(data) {
+        console.log(data)
+    },
+  })
+
+  const proposal = useRef({
+    Audits: "",
+    "Good Reward Allocation": "",
+    "Guardian Name": "",
+    "Guardian Social Handle": "",
+    "Guardian Wallet": "",
+    "Lite/Whitepaper": "",
+    "Project Ethereum Wallet": "",
+    "Project Summary": "",
+    Proposal: "",
+    "Reward Distribution Terms": "",
+    "Social Docs": "",
+  });
+
+  var query = `query {
+    proposal (id: ${index}) {
+      description
+    }
+  }`;
+
+  useEffect(() => {
+    fetch("https://api.thegraph.com/subgraphs/name/clearlyrubix/poggers", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        query,
+      }),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        try {
+          proposal.current = JSON.parse(data.data.proposal.description);
+        } catch (e) {
+          console.log(e)
+        }
+      });
+  });
+
   if (status == "Active" || status == "Pending" || status == "") return <></>;
   else {
     return (
       <>
-        <Link href={`/proposal/${index}`}>{`Proposal ${index}`}</Link>
+        <Link href={`/proposal/${index}`}>
         <div className={styles.proposal}>
+          <p>Name: {proposal.current.Proposal}</p>
           <p>ID: {id}</p>
-
           <div className="grid grid-cols-2 grid-rows-2 text-xl">
             <p className="text-left">
               Approved {Math.round((parseInt(approved) / parseInt(totalVotes)) * 100 * 100) / 100}%
@@ -95,7 +167,7 @@ export default function Proposal({ index }: Props) {
             <p className="text-left">
               Rejected {Math.round((parseInt(rejected) / parseInt(totalVotes)) * 100 * 100) / 100}%
             </p>
-            <p className="text-left">Ended: N/A</p>
+            <p className="text-left">You Voted: {getReceipt.data?.hasVoted ? getVoteString(getReceipt.data?.support) : 'N/A'}</p>
           </div>
 
           <div className="grid grid-cols-2 grid-rows-2">
@@ -108,6 +180,7 @@ export default function Proposal({ index }: Props) {
           <p>Start block: {startBlock}</p>
           <p>End block: {endBlock}</p>
         </div>
+        </Link>
       </>
     );
   }

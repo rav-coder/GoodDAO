@@ -1,8 +1,8 @@
 import styles from "../styles/ProposalPages.module.css";
 import pendingProposals from "../data/pendingProposals.json";
 import { GOVERNANCE_ABI, GOVERNANCE_ADDRESS } from "../utils/constants";
-import { useContractRead, useContractReads } from "wagmi";
-import { useState } from "react";
+import { useAccount, useContractRead, useContractReads } from "wagmi";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { formatUnits } from "ethers/lib/utils";
 
@@ -20,6 +20,42 @@ export default function Proposal({ index }: Props) {
   const [totalVotes, setTotalVotes] = useState('');
   const [status, setStatus] = useState("");
 
+  const getStatusString = (state: number) => {
+    switch (state) {
+      case 0:
+        return ("Pending");
+      case 1:
+        return("Active");
+      case 2:
+        return("Canceled");
+      case 3:
+        return("Defeated");
+      case 4:
+        return("Succeeded");
+      case 5:
+        return("Queued");
+      case 6:
+        return("Expired");
+      case 7:
+        return("Executed");
+      default:
+        return("")
+    }
+  }
+
+  const getVoteString = (vote: number) => {
+    switch (vote) {
+      case 0:
+        return 'Against';
+      case 1:
+        return 'For';
+      case 2:
+        return 'Abstain'
+      default:
+        return 'Abstain'
+    }
+  }
+
   useContractRead({
     addressOrName: GOVERNANCE_ADDRESS,
     contractInterface: GOVERNANCE_ABI,
@@ -29,36 +65,11 @@ export default function Proposal({ index }: Props) {
     args: [index],
     onSuccess(data) {
       let state = parseInt(data.toString());
-      switch (state) {
-        case 0:
-          setStatus("Pending");
-          break;
-        case 1:
-          setStatus("Active");
-          break;
-        case 2:
-          setStatus("Canceled");
-          break;
-        case 3:
-          setStatus("Defeated");
-          break;
-        case 4:
-          setStatus("Succeeded");
-          break;
-        case 5:
-          setStatus("Queued");
-          break;
-        case 6:
-          setStatus("Expired");
-          break;
-        case 7:
-          setStatus("Executed");
-          break;
-      }
+      setStatus(getStatusString(state))
     },
   });
   // fetches proposals from blockchain
-  const fetchProposals = useContractRead({
+  useContractRead({
     addressOrName: GOVERNANCE_ADDRESS,
     contractInterface: GOVERNANCE_ABI,
     functionName: "proposals",
@@ -75,22 +86,96 @@ export default function Proposal({ index }: Props) {
     },
   });
 
+  const {address} = useAccount()
+
+  const getReceipt = useContractRead({
+    addressOrName: GOVERNANCE_ADDRESS,
+    contractInterface: GOVERNANCE_ABI,
+    functionName: 'getReceipt',
+    watch: false,
+    args: [
+      index,
+      address
+    ],
+    onSuccess(data) {
+        console.log(data)
+    },
+  })
+
+
+  const proposal = useRef({
+    Audits: "",
+    "Good Reward Allocation": "",
+    "Guardian Name": "",
+    "Guardian Social Handle": "",
+    "Guardian Wallet": "",
+    "Lite/Whitepaper": "",
+    "Project Ethereum Wallet": "",
+    "Project Summary": "",
+    Proposal: "",
+    "Reward Distribution Terms": "",
+    "Social Docs": "",
+  });
+
+  var query = `query {
+    proposal (id: ${index}) {
+      description
+    }
+  }`;
+
+  useEffect(() => {
+    fetch("https://api.thegraph.com/subgraphs/name/clearlyrubix/poggers", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        query,
+      }),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        try {
+          proposal.current = JSON.parse(data.data.proposal.description);
+        } catch (e) {
+          console.log(e)
+        }
+      });
+  });
+
   if (!(status == "Active" || status == "Pending")) return <></>;
   else {
     return (
       <>
-        {console.log(id, fetchProposals.data, approved)}
-        <Link href={`/proposal/${index}`}>{`Proposal ${index}`}</Link>
+        <Link href={`/proposal/${index}`}>
         <div className={styles.proposal}>
+          <p>Name: {proposal.current.Proposal}</p>
           <p>ID: {id}</p>
-          <p>Approved: {approved}</p>
-          <p>Rejected: {rejected}</p>
-          <p>Abstained: {abstained}</p>
-          <p>Total Votes: {totalVotes}</p>
-          <p>StartBlock: {startBlock}</p>
-          <p>EndBlock: {endBlock}</p>
-          <p>Status: {status}</p>
+          <div className="grid grid-cols-2 grid-rows-2 text-xl">
+            <p className="text-left">
+              Approved {Math.round((parseInt(approved) / parseInt(totalVotes)) * 100 * 100) / 100}%
+            </p>
+            <p className="text-left">Result: {status}</p>
+            <p className="text-left">
+              Rejected {Math.round((parseInt(rejected) / parseInt(totalVotes)) * 100 * 100) / 100}%
+            </p>
+            <p className="text-left">You Voted: {getReceipt.data?.hasVoted ? getVoteString(getReceipt.data?.support) : 'N/A'}</p>
+          </div>
+
+          <div className="grid grid-cols-2 grid-rows-2">
+            <p className="text-left">Approved: {approved}</p>
+            <p className="text-right">Abstained: {abstained}</p>
+            <p className="text-left">Rejected: {rejected}</p>
+            <p className="text-right">Total Votes: {totalVotes}</p>
+          </div>
+
+          <p>Start block: {startBlock}</p>
+          <p>End block: {endBlock}</p>
         </div>
+        </Link>
         <br />
       </>
     );
