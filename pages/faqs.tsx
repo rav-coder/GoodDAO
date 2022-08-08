@@ -1,5 +1,6 @@
 import React from 'react'
 import Accordion from "../components/Accordion";
+import { GOOD_TOKEN, IGIVE_TOKEN } from '../utils/constants';
 
 export default function Faqs() {
     return (
@@ -47,7 +48,7 @@ export default function Faqs() {
 
                     <div id="Where can I buy GOOD?" >
                         <p>
-                        GOOD is available to buy on the Polygon network from Uniswap.org. The contract address is: 0xd21932b453f0dC0918384442D7AaD5B033C4217B
+                        GOOD is available to buy on the Polygon network from Uniswap.org. The contract address is: {GOOD_TOKEN}
                         </p>
                     </div>
 
@@ -82,7 +83,7 @@ export default function Faqs() {
                         by adding the iGIVE contract address.
                         </p>
                         <p>
-                        The iGIVE contract address is: 0xa09508ef545cCe4Ce09bB2b9f585a212E2D690A4
+                        The iGIVE contract address is: {IGIVE_TOKEN}
                         </p>
                     </div>
 
