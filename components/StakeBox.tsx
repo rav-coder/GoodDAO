@@ -61,7 +61,7 @@ const StakeBox = () => {
 	useEffect(
 		() => {
 			setGoodBalance(getGoodBalance.data?.formatted.length! > 7 ? getGoodBalance.data?.formatted.slice(0,7)! + '...' :  getGoodBalance.data?.formatted! )
-			setGiveBalance(getGiveBalance.data?.formatted.length! > 7 ? getGiveBalance.data?.formatted.slice(0,1)! + '...' : getGiveBalance.data?.formatted!)
+			setGiveBalance(getGiveBalance.data?.formatted.length! > 7 ? getGiveBalance.data?.formatted.slice(0,7)! + '...' : getGiveBalance.data?.formatted!)
 			setClaimable(formatUnits(pendingGood.data == undefined ? 0 : pendingGood.data, 18).length > 7 ? formatUnits(pendingGood.data == undefined ? 0 : pendingGood.data, 18).slice(0,7) + '...' : formatUnits(pendingGood.data == undefined ? 0 : pendingGood.data, 18))
 		},[getGiveBalance.data?.formatted, getGoodBalance.data?.formatted, pendingGood.data]
 	)
@@ -77,11 +77,29 @@ const StakeBox = () => {
 			approveAmnt !== '' ? parseUnits(approveAmnt, 18) : 0
 		],
 		onSuccess() {
-			toast.success('Deposited')
+			toast.warn('Trasaction Pending')
 			setShowModal(false)
 		},
-		onError(error) {
-			toast.error(error.message)
+		onError(error: any) {
+			if (error.error != null) {
+				toast.error(error.error.data.message)
+			} else {
+				toast.error(error.message)
+			}
+		},
+	})
+
+	const { isLoading: depositLoading } = useWaitForTransaction({
+		hash: deposit.data?.hash,
+		onSuccess(data) {
+			toast.success('Deposited')
+		},
+		onError(error: any) {
+			if (error.error != null) {
+				toast.error(error.error.data.message)
+			} else {
+				toast.error(error.message)
+			}
 		},
 	})
 
@@ -98,15 +116,29 @@ const StakeBox = () => {
 
 		],
 		onSuccess() {
-			toast.success('Approved')
+			toast.warn('Trasaction Pending')
 		},
-		onError(error) {
-			toast.error(error.message)
+		onError(error: any) {
+			if (error.error != null) {
+				toast.error(error.error.data.message)
+			} else {
+				toast.error(error.message)
+			}
 		},
 	})
 
-	const { data: waitData, isError: waitError, isLoading: waitLoading } = useWaitForTransaction({
+	const { isLoading: waitLoading } = useWaitForTransaction({
 		hash: approve.data?.hash,
+		onSuccess(data) {
+			toast.success('Approved')
+		},
+		onError(error: any) {
+			if (error.error != null) {
+				toast.error(error.error.data.message)
+			} else {
+				toast.error(error.message)
+			}
+		},
 	})
 
 	const withdraw = useContractWrite({
@@ -119,13 +151,30 @@ const StakeBox = () => {
 			withdrawAmnt !== '' ? parseUnits(withdrawAmnt, 18) : 0
 		],
 		onSuccess() {
-			toast.success('Withdrawn')
-			
+			toast.warn('Trasaction Pending')
 		},
-		onError(error) {
-			toast.error(error.message)
+		onError(error: any) {
+			if (error.error != null) {
+				toast.error(error.error.data.message)
+			} else {
+				toast.error(error.message)
+			}
 		},
 		
+	})
+
+	const { isLoading: withdrawLoading } = useWaitForTransaction({
+		hash: withdraw.data?.hash,
+		onSuccess(data) {
+			toast.success('Withdrawn')
+		},
+		onError(error: any) {
+			if (error.error != null) {
+				toast.error(error.error.data.message)
+			} else {
+				toast.error(error.message)
+			}
+		},
 	})
 
 
@@ -139,11 +188,29 @@ const StakeBox = () => {
 			0 //pid
 		],
 		onSuccess() {
+			toast.warn('Trasaction Pending')
+		},
+		onError(error: any) {
+			if (error.error != null) {
+				toast.error(error.error.data.message)
+			} else {
+				toast.error(error.message)
+			}
+		},
+	})
+
+	const { isLoading: claimLoading } = useWaitForTransaction({
+		hash: claimGood.data?.hash,
+		onSuccess(data) {
 			toast.success('Claimed')
 		},
-		onError(error) {
-			toast.error(error.message)
-		}
+		onError(error: any) {
+			if (error.error != null) {
+				toast.error(error.error.data.message)
+			} else {
+				toast.error(error.message)
+			}
+		},
 	})
 
 
@@ -195,7 +262,7 @@ const StakeBox = () => {
 
 			{allowance.data?.toHexString() == "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff" ? <button className={`m-auto text-white bg-green rounded-md py-2 px-3 mt-2 font-bold`} 
 				onClick={() => setShowModal(true)}
-				>Deposit</button> :
+				disabled={depositLoading}>{depositLoading ? 'Processing...' : 'Deposit'}</button> :
 
 				<button className={`m-auto text-white bg-green rounded-md py-2 px-3 mt-2 font-bold`} onClick={
 				
@@ -215,17 +282,17 @@ const StakeBox = () => {
 			<div className='relative'>
 				<input className='rounded-lg h-8 bg-gray border border-solid w-full' type={'number'} value={withdrawAmnt} onChange={(e) => {setWithdrawAmnt(e.currentTarget.value)}} min={0}/>
 			</div>
-			<button className={`m-auto text-white bg-purple rounded-md py-2 px-3 mt-2 font-bold`} onClick={() => withdraw.write()}>Withdraw</button>
+			<button className={`m-auto text-white bg-purple rounded-md py-2 px-3 mt-2 font-bold`} onClick={() => withdraw.write()} disabled={withdrawLoading}>{withdrawLoading? 'Processing...' : 'Withdraw'}</button>
 		</div>
 
 
-		{/* Approve Section */}
+		{/* Claim Section */}
 		<div className='flex flex-col pt-14 pb-14'>
 			<div className='flex justify-between'>
 				<h1 className='items-start'>Claimable GOOD</h1>
 				<h1 className='items-end'>{claimable}</h1>
 			</div>
-			<button className={`m-auto text-white bg-green rounded-md py-2 px-3 mt-2 font-bold`} onClick={()=> {claimGood.write()}}>Claim GOOD</button>
+			<button className={`m-auto text-white bg-green rounded-md py-2 px-3 mt-2 font-bold`} onClick={()=> {claimGood.write()}} disabled={claimLoading}>{claimLoading? 'Processing...' : 'Claim GOOD'}</button>
 		</div>
 	</div>
   )
