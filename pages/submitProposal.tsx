@@ -7,9 +7,10 @@ import Link from 'next/link'
 
 import { formatUnits } from 'ethers/lib/utils'
 import { toast } from 'react-toastify'
-import { useContractReads, useContractWrite } from 'wagmi'
+import { useContractReads, useContractWrite, useWaitForTransaction } from 'wagmi'
 import { IGIVE_ABI, IGIVE_TOKEN, GOOD_ABI, GOOD_TOKEN, GOVERNANCE_ABI, GOVERNANCE_ADDRESS, RPC_URL } from '../utils/constants'
 import Web3 from 'web3'
+import Router, { useRouter } from 'next/router';
 
 function encodeParameters(types: string[], values:string[]) {
   let web3 = new Web3(RPC_URL);
@@ -86,7 +87,7 @@ export default function SubmitProposals() {
       jsonString
     ],
     onSuccess(data) {
-      toast.success('Proposal Submitted!')
+      toast.warn('Transaction Pending')
       //console.log(data);
     },
     onError(error: any) {
@@ -96,20 +97,6 @@ export default function SubmitProposals() {
       if(error.error != null){
 
         toast.error(error.error.data.message);
-      
-        // console.log(error.error.data.code);
-
-        // if(error.error.code = '-32603'){
-        //   if(error.error.data.code = '3'){
-        //     toast.error("Only guardians can submit a proposal.");
-        //   }
-        //   else{
-        //     toast.error("One live proposal already exists for guardian.");
-        //   }
-
-        // }
-        // else{
-        // }
 
       }
       else{
@@ -117,6 +104,27 @@ export default function SubmitProposals() {
       }
 
     }
+  })
+
+
+  const router = useRouter()
+
+  const {isLoading: proposeLoading} = useWaitForTransaction({
+    hash: propose.data?.hash,
+    onSuccess() {
+      toast.success('Proposal Submitted!')
+      router.push('/proposals')
+    },
+    onError(error: any) {
+      if(error.error != null){
+
+        toast.error(error.error.data.message);
+
+      }
+      else{
+        toast.error(error.message)
+      }
+    },
   })
 
   return (
@@ -200,8 +208,8 @@ export default function SubmitProposals() {
           <br />
 
           <button type="submit" onClick={ (event) => { if(!(document.getElementById('myForm') as HTMLFormElement).checkValidity()! ) { } 
-          else{ event.preventDefault(); propose.write(); } } } className={styles.submit}>
-          Submit
+          else{ event.preventDefault(); propose.write(); } } } className={styles.submit} disabled={proposeLoading}>
+          {proposeLoading? 'Processing...' : 'Submit'}
           </button>
 
         </form>   
