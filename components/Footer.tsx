@@ -24,30 +24,30 @@ const Footer = () => {
 
 		<div className='fixed bottom-0 justify-center w-screen z-10'>
 			<div className="flex justify-between mx-auto pb-5 w-1/6 border-red-500 border-0">
-				<a href='https://twitter.com/BCharityFi' rel='noreferrer' target='_blank'>
+				<a href='https://twitter.com/BCharityFi' rel='noreferrer noopener' target='_blank'>
 					<div className='flex justify-center align-middle items-center self-center bg-white w-10 h-10 rounded-full'>
 						<FontAwesomeIcon icon={faTwitter} />
 					</div>
 				</a>
 
-				<a href='https://discord.com/invite/4vKS59q5kV' rel='noreferrer' target='_blank'>
+				<a href='https://discord.com/invite/4vKS59q5kV' rel='noreferrer noopener' target='_blank'>
 					<div className='flex justify-center align-middle items-center self-center bg-white w-10 h-10 rounded-full'>
 						<FontAwesomeIcon icon={faDiscord} />
 					</div>
 				</a>
 
-				<a href='https://www.instagram.com/bcharityofficial/' rel='noreferrer' target='_blank'>
+				<a href='https://www.instagram.com/bcharityofficial/' rel='noreferrer noopener' target='_blank'>
 					<div className='flex justify-center align-middle items-center self-center bg-white w-10 h-10 rounded-full'>
 						<FontAwesomeIcon icon={faInstagram} />
 					</div>
 				</a>
-				<a href='https://github.com/BCharity-Net/web3gooddao/' rel='noreferrer' target='_blank'>
+				<a href='https://github.com/BCharity-Net/web3gooddao/' rel='noreferrer noopener' target='_blank'>
 					<div className='flex justify-center align-middle items-center self-center bg-white w-10 h-10 rounded-full'>
 						<FontAwesomeIcon icon={faGithub} />
 					</div>
 				</a>
 
-				<a href='https://gooddao-1.gitbook.io/gooddao/' rel='noreferrer' target='_blank'>
+				<a href='https://gooddao-1.gitbook.io/gooddao/' rel='noreferrer noopener' target='_blank'>
 					<div className='flex justify-center align-middle items-center self-center bg-white w-10 h-10 rounded-full'>
 						<FontAwesomeIcon icon={faBook} />
 					</div>

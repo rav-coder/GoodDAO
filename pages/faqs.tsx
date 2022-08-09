@@ -1,3 +1,5 @@
+import { faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react'
 import Accordion from "../components/Accordion";
 import { GOOD_TOKEN, IGIVE_TOKEN } from '../utils/constants';
@@ -48,7 +50,7 @@ export default function Faqs() {
 
                     <div id="Where can I buy GOOD?" >
                         <p>
-                        GOOD is available to buy on the Polygon network from Uniswap.org. The contract address is: {GOOD_TOKEN}
+                        GOOD is available to buy on the Polygon network from Uniswap.org. The contract address is: <a className='underline text-purple' href={`https://mumbai.polygonscan.com/address/${GOOD_TOKEN}`} target='_blank' rel='noreferrer noopener'>{GOOD_TOKEN}<FontAwesomeIcon icon={faArrowUpRightFromSquare} className='w-3 h-3 align-top pt-1'/></a>
                         </p>
                     </div>
 
@@ -83,7 +85,7 @@ export default function Faqs() {
                         by adding the iGIVE contract address.
                         </p>
                         <p>
-                        The iGIVE contract address is: {IGIVE_TOKEN}
+                        The iGIVE contract address is: <a className='underline text-purple' href={`https://mumbai.polygonscan.com/address/${IGIVE_TOKEN}`} target='_blank' rel='noreferrer noopener'>{IGIVE_TOKEN}<FontAwesomeIcon icon={faArrowUpRightFromSquare} className='w-3 h-3 align-top pt-1'/></a>
                         </p>
                     </div>
 
