@@ -17,6 +17,8 @@ const StakeBox = () => {
 	const [giveBalance, setGiveBalance] = useState('Fetching')
 	const [claimable, setClaimable] = useState('Fetching')
 
+	const [approved, setApproved] = useState(false)
+
 	const {address} = useAccount()
 
 	const getGoodBalance = useBalance({
@@ -60,10 +62,13 @@ const StakeBox = () => {
 
 	useEffect(
 		() => {
-			setGoodBalance(getGoodBalance.data?.formatted.length! > 7 ? getGoodBalance.data?.formatted.slice(0,7)! + '...' :  getGoodBalance.data?.formatted! )
-			setGiveBalance(getGiveBalance.data?.formatted.length! > 7 ? getGiveBalance.data?.formatted.slice(0,7)! + '...' : getGiveBalance.data?.formatted!)
+			//setGoodBalance(getGoodBalance.data?.formatted.length! > 7 ? getGoodBalance.data?.formatted.slice(0,7)! + '...' :  getGoodBalance.data?.formatted! )
+			setGoodBalance(getGoodBalance.data?.formatted!)
+			//setGiveBalance(getGiveBalance.data?.formatted.length! > 7 ? getGiveBalance.data?.formatted.slice(0,7)! + '...' : getGiveBalance.data?.formatted!)
+			setGiveBalance(getGiveBalance.data?.formatted!)
 			setClaimable(formatUnits(pendingGood.data == undefined ? 0 : pendingGood.data, 18).length > 7 ? formatUnits(pendingGood.data == undefined ? 0 : pendingGood.data, 18).slice(0,7) + '...' : formatUnits(pendingGood.data == undefined ? 0 : pendingGood.data, 18))
-		},[getGiveBalance.data?.formatted, getGoodBalance.data?.formatted, pendingGood.data]
+			allowance.data?.toHexString() == "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff" ? setApproved(true) : setApproved(false)
+		},[allowance.data, getGiveBalance.data?.formatted, getGoodBalance.data?.formatted, pendingGood.data]
 	)
 	
 
@@ -216,7 +221,7 @@ const StakeBox = () => {
 
   return (
 	
-	<div className='bg-gray rounded-lg border-solid border px-10 flex flex-col'>
+	<div className='bg-gray rounded-lg border-solid border px-10 flex flex-col md:h-full md:w-full justify-between lg:h-[30rem]'>
 		
 		{/* Deposit Modal */}
 		{showModal && 
@@ -234,7 +239,7 @@ const StakeBox = () => {
 				<div className='h-full'>
 					<p className='pt-3 pl-2'>Confirm Deposit Amount</p>
 					<p className='pt-3 pl-2 text-lg font-bold'>{approveAmnt}</p>
-					<div className='absolute left-1/2 -translate-x-1/2 bottom-2'><button className='p-2 text-white font-bold rounded-md bg-green' onClick={()=>{deposit.write()}}>Deposit</button></div>
+					<div className='absolute left-1/2 -translate-x-1/2 bottom-2'><button className='text-white rounded-md bg-green lg:py-2 md:py-1 px-3 mt-2 font-bold xl:text-sm lg:text-sm md:text-xs' onClick={()=>{deposit.write()}}>Deposit</button></div>
 				</div>
 			</div>
 		</div>
@@ -244,27 +249,32 @@ const StakeBox = () => {
 		{/* Header */}
 		{/* <button className='ml-auto -mr-8 mt-2'><FontAwesomeIcon icon={faRotateRight}/></button> */}
 		<div className=''>
-			<h1 className='font-bold text-black text-center text-xl pt-6'>Stake GOOD</h1>
+			<h1 className='font-bold text-black text-center text-xl mt-6'>Stake GOOD</h1>
 		</div>
 
 
 		{/* Approve Section */}
-		<div className='flex flex-col pt-14'>
+		<div className='flex flex-col'>
 			<div>
-				<div className='flex justify-between'>
-					<h1 className='items-start'>GOOD Balance: </h1>
-					<h1 className='items-end'>{goodBalance}</h1>
+				<div className='flex justify-between text-inline'>
+					<h1 className='items-start lg:text-base md:text-xs'>GOOD Balance: </h1>
+					<h1 className='items-end lg:text-base md:text-xs overflow-ellipsis'>{goodBalance}</h1>
 				</div>
 				<div className='relative'>
 			</div>
 				<input className='rounded-lg h-8 bg-gray border border-solid w-full'  type={'number'} value={approveAmnt} onChange={(e) => {setApproveAmnt(e.currentTarget.value)}} min={0}/>
 			</div>
 
-			{allowance.data?.toHexString() == "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff" ? <button className={`m-auto text-white bg-green rounded-md py-2 px-3 mt-2 font-bold`} 
+			{approved ? 
+			<button className={`m-auto text-white bg-green rounded-md font-bold lg:py-2 md:py-1 px-3 mt-2 xl:text-sm lg:text-sm md:text-xs`} 
 				onClick={() => setShowModal(true)}
-				disabled={depositLoading}>{depositLoading ? 'Processing...' : 'Deposit'}</button> :
+				disabled={depositLoading}>
+					{depositLoading ? 'Processing...' : 'Deposit'}
+					</button> 
+				
+				:
 
-				<button className={`m-auto text-white bg-green rounded-md py-2 px-3 mt-2 font-bold`} onClick={
+				<button className={`m-auto text-white bg-green rounded-md font-bold lg:py-2 md:py-1 px-3 mt-2 xl:text-sm lg:text-sm md:text-xs`} onClick={
 				
 					() => approve.write()}
 					disabled={waitLoading}>{waitLoading? 'Processing...' : 'Approve'}</button>
@@ -274,25 +284,25 @@ const StakeBox = () => {
 
 
 		{/* Withdraw Section */}
-		<div className='flex flex-col pt-14'>
+		<div className='flex flex-col'>
 			<div className='flex justify-between'>
-				<h1 className='items-start'>iGIVE Balance: </h1>
-				<h1 className='items-end'>{giveBalance}</h1>
+				<h1 className='items-start lg:text-base md:text-xs'>iGIVE Balance: </h1>
+				<h1 className='items-end lg:text-base md:text-xs overflow-ellipsis'>{giveBalance}</h1>
 			</div>
 			<div className='relative'>
 				<input className='rounded-lg h-8 bg-gray border border-solid w-full' type={'number'} value={withdrawAmnt} onChange={(e) => {setWithdrawAmnt(e.currentTarget.value)}} min={0}/>
 			</div>
-			<button className={`m-auto text-white bg-purple rounded-md py-2 px-3 mt-2 font-bold`} onClick={() => withdraw.write()} disabled={withdrawLoading}>{withdrawLoading? 'Processing...' : 'Withdraw'}</button>
+			<button className={`m-auto text-white bg-purple rounded-md lg:py-2 md:py-1 px-3 mt-2 font-bold xl:text-sm lg:text-sm md:text-xs`} onClick={() => withdraw.write()} disabled={withdrawLoading}>{withdrawLoading? 'Processing...' : 'Withdraw'}</button>
 		</div>
 
 
 		{/* Claim Section */}
-		<div className='flex flex-col pt-14 pb-14'>
+		<div className='flex flex-col mb-6'>
 			<div className='flex justify-between'>
-				<h1 className='items-start'>Claimable GOOD</h1>
-				<h1 className='items-end'>{claimable}</h1>
+				<h1 className='items-start xl:text-sm lg:text-sm md:text-xs'>Claimable GOOD</h1>
+				<h1 className='items-end xl:text-sm lg:text-sm md:text-xs'>{claimable}</h1>
 			</div>
-			<button className={`m-auto text-white bg-green rounded-md py-2 px-3 mt-2 font-bold`} onClick={()=> {claimGood.write()}} disabled={claimLoading}>{claimLoading? 'Processing...' : 'Claim GOOD'}</button>
+			<button className={`m-auto text-white bg-green rounded-md lg:py-2 md:py-1 px-3 mt-2 font-bold xl:text-sm lg:text-sm md:text-xs`} onClick={()=> {claimGood.write()}} disabled={claimLoading}>{claimLoading? 'Processing...' : 'Claim GOOD'}</button>
 		</div>
 	</div>
   )

@@ -13,7 +13,7 @@ type Props = {
 const Layout = ({ children }: Props) => (
 	<>
 	<div className='h-screen'>
-		<div className='fixed h-screen w-screen overflow-hidden z-[-1] blur-lg opacity-50'>
+		<div className='fixed h-screen w-screen overflow-hidden z-[-1] '>
 			<Image src={background} alt='background' layout='fill' quality={100} />	
 		</div>
 		<Nav />

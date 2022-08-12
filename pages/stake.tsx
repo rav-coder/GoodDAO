@@ -198,12 +198,12 @@ const Stake = () => {
 
 
   return (
-	<div className='flex h-screen space-x-10 p-10 items-center'>
+	<div className='flex h-screen items-center w-screen'>
 		<div className='flex flex-1 flex-col h-screen pt-[200px] pb-60 justify-between px-20'>
 			<InfoBox title="Price" text={'$' + tokenPriceVsQuote.toString()}/>
 			<InfoBox title="Token Threshold" text={threshold}/>
 		</div>
-		<div className=' flex-1 '>
+		<div className='flex flex-1 flex-col h-screen pt-[200px] pb-60 justify-center px-20 '>
 			<StakeBox/>
 		</div>
 		<div className='flex flex-1 flex-col h-screen pt-[200px] pb-60 justify-between px-20'>
